@@ -74,9 +74,9 @@ export async function pullImageInfoFromDb (): Promise<FileObj[]> {
   }
 }
 
-// export async function deleteImageInfoFromDb (imageName): Promise<string[]> {
-//   try {
-//   } catch (error) {
-//     throw new Error(`Error while attempting to delete an image with name "${imageName}" from the database`)
-//   }
-// }
+export async function deleteImageInfoFromDb (imageName): Promise<string[]> {
+  try {
+  } catch (error) {
+    throw new Error(`Error while attempting to delete an image with name "${imageName}" from the database`)
+  }
+}

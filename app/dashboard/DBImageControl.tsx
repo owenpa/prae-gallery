@@ -1,4 +1,7 @@
 import { pullImageInfoFromDb } from '@/actions'
+import ImageDeleteButton from './ImageDeleteButton'
+import ConfirmationModal from './ConfirmationModal'
+
 // import { deleteImageInfoFromDb } from "@/actions"
 export default async function DBImageControl (): Promise<JSX.Element> {
   const imageInfoArray = await pullImageInfoFromDb()
@@ -8,7 +11,7 @@ export default async function DBImageControl (): Promise<JSX.Element> {
         <h1>{fileObj.imagename}</h1>
         <img className="max-w-80" src={`../assets/gallery/${fileObj.imagename}`}></img>
         <p>{fileObj.description}</p>
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id={fileObj.imagename}>Delete</button>
+        <ImageDeleteButton parentFileName={fileObj.imagename} />
       </div>
     )
   })
@@ -16,6 +19,7 @@ export default async function DBImageControl (): Promise<JSX.Element> {
   return (
     <div>
       {imagePost}
+      <ConfirmationModal />
     </div>
   )
 }

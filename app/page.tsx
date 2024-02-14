@@ -13,7 +13,11 @@ export default async function Home (): Promise<JSX.Element> {
   })
   return (
     <main>
-      <p>commission - dashboard - login</p>
+      <p>
+        <a href='/commission'>commission</a> -
+        <a href='/dashboard'>dashboard</a> -
+        <a href='login'>login</a>
+      </p>
       {imagePost}
     </main>
   )

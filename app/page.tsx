@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { pullImageInfoFromDb } from '../actions'
+import { ToggleTheme } from './ui/ToggleTheme'
 
 export default async function Home (): Promise<JSX.Element> {
   const imageInfoArray = await pullImageInfoFromDb()
@@ -18,6 +19,7 @@ export default async function Home (): Promise<JSX.Element> {
   return (
     <main>
       <p>
+        <ToggleTheme />
         <Link href='/commission'>commission</Link> -
         <Link href='/dashboard'>dashboard</Link> -
         <Link href='login'>login</Link>

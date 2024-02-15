@@ -6,6 +6,7 @@ import type { FileObj, ImageDataToDB } from './types/types'
 import { db } from '@vercel/postgres'
 import type { QueryResult } from '@vercel/postgres'
 import { readdirSync } from 'fs'
+import { unlink } from 'fs/promises'
 
 export async function authenticate (prevState: string | undefined, formData: FormData): Promise<string | undefined> {
   try {
@@ -42,19 +43,28 @@ export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<Query
     if (checkQueryResult.rowCount > 0) {
       console.error(`There may be image with the name ${fileName} already in the Images table. The original will not be overwritten.`)
     } else {
-      const result = await client.query(queryInsert, [fileName, 0, price, description])
+      const queryResult = await client.query(queryInsert, [fileName, 0, price, description])
       console.log(`Successfully created image: ${fileName}`)
-      return result.rows[0]
+      return queryResult.rows[0]
     }
   } catch (error) {
     throw new Error('Failed to insert image data into database.')
   }
 }
 
-export async function pullImageInfoFromDb (): Promise<FileObj[]> {
+export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
   try {
     const localImages = readdirSync('./public/assets/gallery')
-    const queryAbleImageNames = localImages.map(imageName => imageName.padStart(imageName.length + 1, '\'').padEnd(imageName.length + 2, '\'')).join(', ')
+    const queryAbleImageNames = localImages.reduce((nameAcc: string[], imageName) => {
+      // eslint-disable-next-line no-useless-escape
+      if (!(/(^|\/)\.[^\/\.]/g).test(imageName)) {
+        nameAcc.push(`'${imageName}'`)
+      }
+      return nameAcc
+    }, []).join(', ')
+    if (queryAbleImageNames.length === 0) {
+      return []
+    }
     const client = await db.connect()
     const query = `
     SELECT * FROM Images
@@ -64,19 +74,42 @@ export async function pullImageInfoFromDb (): Promise<FileObj[]> {
 
     if (queryResult.rowCount === 0) {
       console.error('Error while pulling image information from the database')
-      return queryResult.rows
     } else {
       console.log(`Successful image pull from the database: ${queryAbleImageNames}`)
-      return queryResult.rows
     }
+    return queryResult.rows
   } catch (error) {
     throw new Error('Failed to pull images from database: ')
   }
 }
 
-export async function deleteImageInfoFromDb (imageName): Promise<string[]> {
+export async function deleteImageInfoFromDb (prevState: string[] | undefined, formData: FormData): Promise<string[] | undefined> {
+  // TODO: validate image name ends in various file type extensions
+  const imageNameToBeDeleted = formData.get('image-name')?.toString()
+  if (imageNameToBeDeleted === undefined) {
+    console.error('Error grabbing name from imageNameToBeDeleted in deleteImageInfoFromDb()')
+    throw new Error()
+  }
   try {
+    const client = await db.connect()
+    const checkQuery = `DELETE FROM Images WHERE ImageName='${imageNameToBeDeleted}'`
+    const queryResult = await client.query(checkQuery)
+
+    console.log(`Attempting to delete image with the name '${imageNameToBeDeleted} from the database'`)
+    if (queryResult.rowCount === 0) {
+      console.error(`Image '${imageNameToBeDeleted}' was not found or there was a problem executing the query.`)
+    } else {
+      console.log(`Successfully deleted an image with the name ${imageNameToBeDeleted} from the database.`)
+    }
+    console.log(`Attempting to delete image with the name '${imageNameToBeDeleted}' from the local gallery.`)
+
+    const localImages = readdirSync('./public/assets/gallery')
+    if (localImages.includes(imageNameToBeDeleted)) {
+      await unlink(`./public/assets/gallery/${imageNameToBeDeleted}`)
+      console.log(`Successfully deleted an image with the name ${imageNameToBeDeleted} from the local gallery.`)
+    }
+    return queryResult.rows
   } catch (error) {
-    throw new Error(`Error while attempting to delete an image with name "${imageName}" from the database`)
+    throw new Error(`Error while attempting to delete an image with name "${imageNameToBeDeleted}" from the database.`)
   }
 }

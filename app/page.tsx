@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { pullImageInfoFromDb } from '../actions'
 
 export default async function Home (): Promise<JSX.Element> {
@@ -17,9 +18,9 @@ export default async function Home (): Promise<JSX.Element> {
   return (
     <main>
       <p>
-        <a href='/commission'>commission</a> -
-        <a href='/dashboard'>dashboard</a> -
-        <a href='login'>login</a>
+        <Link href='/commission'>commission</Link> -
+        <Link href='/dashboard'>dashboard</Link> -
+        <Link href='login'>login</Link>
       </p>
       {imageInfoArray.length > 0 ? imagePost : <p>No images to display.</p>}
     </main>

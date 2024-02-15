@@ -17,7 +17,6 @@ export default function ConfirmationModal (): JSX.Element {
       }
       return 0
     }
-    // change button color / indicate proper image name
     if (submitButton !== null) {
       submitButton.className = submitButtonColors.green
     }

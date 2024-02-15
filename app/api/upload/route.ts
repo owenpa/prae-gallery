@@ -14,7 +14,7 @@ Promise<NextResponse<{ error: string }> | NextResponse<{ Message: string, status
   const buffer = Buffer.from(await (file as File).arrayBuffer())
   const filename = (file as File).name.replaceAll(' ', '_')
   try {
-    await writeFile(path.join(process.cwd(), 'public/gallery/' + filename), buffer)
+    await writeFile(path.join(process.cwd(), 'public/assets/gallery/' + filename), buffer)
     await addImageInfoToDB(formMetadata)
     return NextResponse.json({ Message: 'Success', status: 201 })
   } catch (error) {

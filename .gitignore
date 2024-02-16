@@ -39,4 +39,5 @@ next-env.d.ts
 .vscode
 public/assets/gallery/*
 !public/assets/gallery/.gitkeep
+!node_modules/bcrypt
 TODO.md

@@ -3,13 +3,13 @@
 import Image from 'next/image'
 import { Button } from '../ui/button'
 
-export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, imagedesc }: { setIndexProp: (prevIdx: number, newIdx: number) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string }): JSX.Element {
+export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, imagedesc }: { setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string }): JSX.Element {
   function handleUpClick (): void {
-    setIndexProp(idx, idx + 1)
+    setIndexProp(idx, idx + 1, 'up')
   }
 
   function handleDownClick (): void {
-    setIndexProp(idx, idx - 1)
+    setIndexProp(idx, idx - 1, 'down')
   }
 
   return (
@@ -20,8 +20,8 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
       <div className='max-w self-center'>
         <p className='text-3xl break-all'>{imagename}</p>
         <p>{imagedesc}</p>
-        <Button onClick={() => { handleUpClick() }}>Up</Button>
-        <Button onClick={() => { handleDownClick() }}>Down</Button>
+        <Button className='nav-button' onClick={() => { handleUpClick() }}>Up</Button>
+        <Button className='nav-button' onClick={() => { handleDownClick() }}>Down</Button>
       </div>
     </div>
   )

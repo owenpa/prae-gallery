@@ -4,7 +4,7 @@ import Image from 'next/image'
 import ActionBar from '../ui/ActionBar'
 import { useEffect, useState } from 'react'
 
-export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, imagedesc }: { setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string }): JSX.Element {
+export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, imagedesc, asGallery }: { setIndexProp: ((prevIdx: number, newIdx: number, direction: string) => void) | undefined, idx: number, imagesrc: string, imagename: string, imagedesc: string | undefined, asGallery: boolean }): JSX.Element {
   const [previouslyLiked, setPreviouslyLiked] = useState(false)
   useEffect(() => {
     setPreviouslyLiked(localStorage.getItem(imagename) !== null)
@@ -16,11 +16,13 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
       <div className='relative'>
         <Image fill={true} className='object-contain' src={imagesrc} alt={`image in gallery #${idx}`} />
       </div>
+      {asGallery &&
       <div className='max-w self-center'>
         <p className='text-3xl break-all'>{imagename}</p>
         <p>{imagedesc}</p>
         <ActionBar setIndexProp={setIndexProp} idx={idx} imagename={imagename} previouslyLiked={previouslyLiked}/>
-      </div>
+      </div>}
+
     </div>
   )
 }

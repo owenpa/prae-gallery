@@ -4,13 +4,13 @@ import { Heart, Link } from 'lucide-react'
 import { Button } from '../ui/button'
 import type { MouseEvent } from 'react'
 
-export default function ActionBar ({ setIndexProp, idx, imagename, previouslyLiked }: { setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagename: string, previouslyLiked: boolean }): JSX.Element {
+export default function ActionBar ({ setIndexProp, idx, imagename, previouslyLiked }: { setIndexProp: ((prevIdx: number, newIdx: number, direction: string) => void) | undefined, idx: number, imagename: string, previouslyLiked: boolean }): JSX.Element {
   function handleUpClick (): void {
-    setIndexProp(idx, idx + 1, 'up')
+    setIndexProp !== undefined && setIndexProp(idx, idx + 1, 'up')
   }
 
   function handleDownClick (): void {
-    setIndexProp(idx, idx - 1, 'down')
+    setIndexProp !== undefined && setIndexProp(idx, idx - 1, 'down')
   }
 
   function handleLikeClick (clickEvent: MouseEvent<HTMLDivElement>): void {

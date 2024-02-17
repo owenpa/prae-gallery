@@ -92,8 +92,8 @@ export async function deleteImageInfoFromDb (prevState: string[] | undefined, fo
   }
   try {
     const client = await db.connect()
-    const checkQuery = `DELETE FROM Images WHERE ImageName='${imageNameToBeDeleted}'`
-    const queryResult = await client.query(checkQuery)
+    const query = `DELETE FROM Images WHERE ImageName='${imageNameToBeDeleted}'`
+    const queryResult = await client.query(query)
 
     console.log(`Attempting to delete image with the name '${imageNameToBeDeleted} from the database'`)
     if (queryResult.rowCount === 0) {
@@ -111,5 +111,26 @@ export async function deleteImageInfoFromDb (prevState: string[] | undefined, fo
     return queryResult.rows
   } catch (error) {
     throw new Error(`Error while attempting to delete an image with name "${imageNameToBeDeleted}" from the database.`)
+  }
+}
+
+export async function addLikeToImage (imageName: string): Promise<void> {
+  if (typeof imageName !== 'string') {
+    console.error('Error while trying to like an image. The image name was not of type string. ')
+    throw new Error()
+  }
+  try {
+    const client = await db.connect()
+    const query = `UPDATE Images SET Likes = Likes + 1 WHERE ImageName='${imageName}'`
+    const queryResult = await client.query(query)
+
+    console.log(`Attempting to like an image with the name "${imageName}"`)
+    if (queryResult.rowCount === 0) {
+      console.error(`Image '${imageName}' was not found or there was a problem executing the query.`)
+    } else {
+      console.log(`Successfully liked an image with the name ${imageName}.`)
+    }
+  } catch (error) {
+    throw new Error(`Error while attempting to like an image with name "${imageName}"`)
   }
 }

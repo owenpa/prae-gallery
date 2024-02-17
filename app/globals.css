@@ -48,7 +48,57 @@
     --ring: 35.5 91.7% 32.9%;
   }
 }
- 
+
+.image-stuff {
+  transition: 1s
+}
+
+.fadeout {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fadeinup {
+  opacity: 1;
+  animation: movementDownToUp 1s;
+}
+.fadeindown {
+  opacity: 1;
+  animation: movementUpToDown 1s;
+}
+
+.fadeoutup {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  animation: doNothing 1s;
+}
+.fadeoutdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  animation: doNothing 1s;
+}
+
+@keyframes movementDownToUp {
+  0% {transform: inherit}
+  1% {transform: translateY(40px)}
+  100% {transform: translateY(0px)}
+}
+
+@keyframes movementUpToDown {
+  0% {transform: inherit}
+  1% {transform: translateY(-40px)}
+  100% {transform: translateY(0px)}
+}
+
+@keyframes opacityFadeIn {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
+
+@keyframes doNothing { } /* image carousel continuity (works off of animation end event)*/
+
 @layer base {
   * {
     @apply border-border;

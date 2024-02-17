@@ -1,5 +1,4 @@
 import Link from 'next/link'
-// import { pullImageInfoFromDb } from '../actions'
 import ToggleTheme from './ui/ToggleTheme'
 import ImageView from './imageviewer/ImageView'
 

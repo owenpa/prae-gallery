@@ -134,3 +134,19 @@ export async function addLikeToImage (imageName: string): Promise<void> {
     throw new Error(`Error while attempting to like an image with name "${imageName}"`)
   }
 }
+
+export async function pullLocalImages (): Promise<string[]> {
+  try {
+    const localImages = readdirSync('./public/assets/gallery')
+    const queryAbleImageNames = localImages.reduce((nameAcc: string[], imageName) => {
+      // eslint-disable-next-line no-useless-escape
+      if (!(/(^|\/)\.[^\/\.]/g).test(imageName)) {
+        nameAcc.push(imageName)
+      }
+      return nameAcc
+    }, [])
+    return queryAbleImageNames
+  } catch (error) {
+    throw new Error('Failed to read local images')
+  }
+}

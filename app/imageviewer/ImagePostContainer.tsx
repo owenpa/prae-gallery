@@ -34,23 +34,23 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
       Array.from(postElement.getElementsByClassName('nav-button')).forEach(element => {
         element.setAttribute('disabled', 'true')
       })
-      postElement.classList.add('pointer-event-none')
     })
     postElement.addEventListener('animationend', () => {
       Array.from(postElement.getElementsByClassName('nav-button')).forEach(element => {
         element.removeAttribute('disabled')
       })
-      postElement.classList.add('pointer-event-none')
     })
   }
 
   useEffect(() => {
     const currentIdxElement = document.getElementById('image-post-container')?.children[elementIdx]
     const changedIdxElement = document.getElementById('image-post-container')?.children[changedIdx]
+    const currentImageElement = currentIdxElement?.getElementsByTagName('img')[0]
+    const changedImageElement = changedIdxElement?.getElementsByTagName('img')[0]
     if (currentIdxElement === undefined || changedIdxElement === undefined) {
       return
     }
-    const elementIdxClassList = currentIdxElement.classList
+    const currentIdxClassList = currentIdxElement.classList
     let changedIdxClassList = changedIdxElement.classList
 
     toggleButtonUse(changedIdxElement)
@@ -58,28 +58,34 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
     changedIdxClassList = changedIdxElement.classList
 
     if (scrollDirection === 'up') {
-      elementIdxClassList.toggle('fadeoutup')
-      if (elementIdxClassList.contains('fadeinup') || elementIdxClassList.contains('fadeindown')) {
-        elementIdxClassList.toggle('fadeinup', false)
-        elementIdxClassList.toggle('fadeindown', false)
-      }
-      changedIdxClassList.toggle('fadeinup')
+      currentIdxClassList.toggle('fadeout')
+      currentIdxClassList.toggle('fadein', false)
+      currentImageElement?.classList.toggle('fadeoutup')
+      currentImageElement?.classList.toggle('fadeinup', false)
+      currentImageElement?.classList.toggle('fadeindown', false)
+
+      changedImageElement?.classList.toggle('fadeinup')
       changedIdxClassList.toggle('fadeout', false)
+      changedIdxClassList.toggle('fadein')
+      changedIdxClassList.toggle('hidden', false)
     } else if (scrollDirection === 'down') {
-      elementIdxClassList.toggle('fadeoutdown')
-      if (elementIdxClassList.contains('fadeindown') || elementIdxClassList.contains('fadeindown')) {
-        elementIdxClassList.toggle('fadeindown', false)
-        elementIdxClassList.toggle('fadeindup', false)
-      }
-      changedIdxClassList.toggle('fadeindown')
+      currentIdxClassList.toggle('fadeout')
+      currentIdxClassList.toggle('fadein', false)
+      currentImageElement?.classList.toggle('fadeoutdown')
+      currentImageElement?.classList.toggle('fadeinup', false)
+      currentImageElement?.classList.toggle('fadeindown', false)
+
+      changedImageElement?.classList.toggle('fadeindown')
       changedIdxClassList.toggle('fadeout', false)
+      changedIdxClassList.toggle('fadein')
+      changedIdxClassList.toggle('hidden', false)
     }
   }, [elementIdx, changedIdx, scrollDirection])
 
   if (imageInfoArray.length !== 0) {
     imageList = imageInfoArray.map((fileObj, idx) => {
       return (
-        <div key={idx} className={`flex ${idx === 0 ? '' : 'fadeout'} image-stuff`} onAnimationEnd={(animationEvent) => { handleAnimationEnd((animationEvent.target as HTMLDivElement)) }}>
+        <div key={idx} className={`flex ${idx === 0 ? 'fadein' : 'hidden'} image-stuff`} onAnimationEnd={(animationEvent) => { handleAnimationEnd((animationEvent.target as HTMLDivElement)) }}>
           <ImagePost setIndexProp={setIndexProp} idx={idx} imagesrc={`/assets/gallery/${fileObj.imagename}`} imagename={fileObj.imagename} imagedesc={fileObj.description}/>
         </div>
       )

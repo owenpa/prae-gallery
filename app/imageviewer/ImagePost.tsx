@@ -14,7 +14,7 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
   return (
     <div className='grid grid-cols-[50vw_40vw] absolute center w-full justify-center h-screen'>
       <div className='relative'>
-        <Image fill={true} className='object-contain' src={imagesrc} alt={`image in gallery #${idx}`} />
+        <Image className='image-stuff' fill={true} objectFit='contain' src={imagesrc} alt={`image in gallery #${idx}`} />
       </div>
       <div className='max-w self-center'>
         <p className='text-3xl break-all'>{imagename}</p>

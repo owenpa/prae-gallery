@@ -1,7 +1,10 @@
-export default function Commission (): JSX.Element {
+'use server'
+import { pullLocalImages } from '../../actions'
+import CommissionView from './CommissionView'
+
+export default async function Commission (): Promise<JSX.Element> {
+  const imageNameList = await pullLocalImages()
   return (
-    <div className="">
-      <p>WIP</p>
-    </div>
+    <CommissionView imageNameList={imageNameList} />
   )
 }

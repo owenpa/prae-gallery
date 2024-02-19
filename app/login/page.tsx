@@ -2,38 +2,36 @@
 
 import { useFormState, useFormStatus } from 'react-dom'
 import { authenticate } from '../../actions'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { MoveLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 function LoginButton (): JSX.Element {
   const { pending } = useFormStatus()
   return (
-    <button aria-disabled={pending}>Login</button>
+    <Button aria-disabled={pending}>Login</Button>
   )
 }
 
 export default function Login (): JSX.Element {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
+  const router = useRouter()
 
   return (
-    <div className="p-3">
-      <h1 className="display-6 mb-3">Login</h1>
-        <form action={dispatch}>
-          <div className="mb-3">
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" placeholder="Email" aria-describedby="emailHelp" />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password">Password</label>
-            <input id="password" name="password" placeholder="Password" type="password" />
-          </div>
-          <LoginButton />
-        </form>
-        <div>
-          {(errorMessage !== null) && (
-            <>
-              <p>{errorMessage}</p>
-            </>
-          )}
-        </div>
+    <div className='w-screen h-screen flex items-center justify-center flex-col'>
+      <button className='p-2' onClick={() => { router.back() }}><MoveLeft className='hover:stroke-gray-300' color="#ffffff" /></button>
+      <form className='grid gap-2' action={dispatch}>
+        <Label htmlFor='email'>Email</Label>
+        <Input id='email' name='email' placeholder='someone@example.com'/>
+        <Label htmlFor='password'>Password</Label>
+        <Input id='password' name='password' type='password' placeholder='********'/>
+        <LoginButton />
+        {(errorMessage !== null) && (
+          <p className='text-red-800 text-lg'>{errorMessage}</p>
+        )}
+      </form>
     </div>
   )
 };

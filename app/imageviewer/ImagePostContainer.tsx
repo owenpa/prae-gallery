@@ -80,7 +80,7 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
     imageList = imageInfoArray.map((fileObj, idx) => {
       return (
         <div key={idx} className={`flex ${idx === 0 ? '' : 'fadeout'} image-stuff`} onAnimationEnd={(animationEvent) => { handleAnimationEnd((animationEvent.target as HTMLDivElement)) }}>
-          <ImagePost setIndexProp={setIndexProp} idx={idx} imagesrc={`/assets/gallery/${fileObj.imagename}`} imagename={fileObj.imagename} imagedesc={fileObj.description} asGallery={true} />
+          <ImagePost setIndexProp={setIndexProp} idx={idx} imagesrc={`/assets/gallery/${fileObj.imagename}`} imagename={fileObj.imagename} imagedesc={fileObj.description}/>
         </div>
       )
     })

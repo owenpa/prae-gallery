@@ -52,7 +52,7 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/commission" legacyBehavior passHref>
+                <Link href="/commission" passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Commission
                   </NavigationMenuLink>

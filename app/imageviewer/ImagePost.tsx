@@ -34,7 +34,7 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
                 <ToggleTheme />
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
+                <Link href="/" passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Gallery
                   </NavigationMenuLink>

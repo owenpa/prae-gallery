@@ -3,6 +3,7 @@
 import { type FileObj } from '@/types/types'
 import { useEffect, useState } from 'react'
 import ImagePost from './ImagePost'
+import NoImages from '../ui/NoImages'
 
 export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray: FileObj[] }): JSX.Element {
   let imageList: JSX.Element[] = [<></>]
@@ -82,7 +83,11 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
     }
   }, [elementIdx, changedIdx, scrollDirection])
 
-  if (imageInfoArray.length !== 0) {
+  if (imageInfoArray.length === 0) {
+    return (
+      <NoImages />
+    )
+  } else {
     imageList = imageInfoArray.map((fileObj, idx) => {
       return (
         <div key={idx} className={`flex ${idx === 0 ? 'fadein' : 'hidden'} image-stuff`} onAnimationEnd={(animationEvent) => { handleAnimationEnd((animationEvent.target as HTMLDivElement)) }}>
@@ -90,13 +95,12 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
         </div>
       )
     })
+    return (
+      <>
+        <div id='image-post-container' className='max-w-full relative'>
+          {imageList.length > 1 ? imageList : <p>No images to display.</p>}
+        </div>
+      </>
+    )
   }
-
-  return (
-    <>
-      <div id='image-post-container' className='max-w-full relative'>
-        {imageList.length > 1 ? imageList : <p>No images to display.</p>}
-      </div>
-    </>
-  )
 }

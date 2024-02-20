@@ -61,7 +61,7 @@ export default function ImageUpload (): JSX.Element {
         <label htmlFor='title'>Title</label>
         <input id='title' className='title' type='text'/>
         <label htmlFor="price">Price</label>
-        <input id="price" className="price" type="number" max="1000000000"/>
+        <input id="price" className="price" type="number" required max="1000000000"/>
         <label htmlFor="description">Description</label>
         <input id="description" className="description" type="text"/>
         <label htmlFor="footer">Footer</label>

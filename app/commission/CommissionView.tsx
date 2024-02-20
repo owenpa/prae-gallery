@@ -8,7 +8,7 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
   const imageList = imageNameList.map((imageName, idx) => {
     return (
       <div key={idx} className={`commission-transition w-full h-full absolute flex justify-center ${idx === 0 ? '' : 'commission-fadeout'}`}>
-        <Image fill={true} className='object-contain' src={`/assets/gallery/${imageName}`} alt={`image in gallery #${idx}`} />
+        <Image fill={true} className='object-contain image-stuff' src={`/assets/gallery/${imageName}`} alt={`image in gallery #${idx}`} />
       </div>
     )
   })
@@ -24,17 +24,17 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
     }
     index = ++index > images.length ? 1 : index
     images[index - 1].classList.remove('commission-fadeout')
-    setTimeout(changeDisplayedImage, 5000)
+    setTimeout(changeDisplayedImage, 8000)
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => changeDisplayedImage, [])
   return (
-    <div className='flex w-full h-screen'>
-      <div id='gallery-image-container' className='flex w-3/4 items-center justify-center relative'>
+    <div className='grid grid-cols-[50vw_40vw] gap-[5vw] w-full h-screen center justify-center'>
+      <div id='gallery-image-container' className='items-center justify-center relative'>
       {imageList.length > 1 ? imageList : <p>No images to display.</p>}
       </div>
-      <div className='flex h-full w-1/4 items-center'>
+      <div className='flex h-full justify-center items-center'>
         <div>
           <h1 className='text-xl'>Commission status: <X className='inline' color='#ff7a7a' /></h1>
           Prices may vary:

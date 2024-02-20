@@ -27,15 +27,15 @@ export async function authenticate (prevState: string | undefined, formData: For
 export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<QueryResult | undefined> {
   console.log('Attempting to connect to database to add image information')
   const client = await db.connect()
-  let { fileName, price, description } = imageData
+  let { fileName, title, price, description, footer, date } = imageData
   const checkQuery = `
     SELECT *
     FROM Images
     WHERE ImageName = $1
   `
   const queryInsert = `
-    INSERT INTO Images (ImageName, Likes, Price, Description)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO Images (ImageName, ImageTitle, Likes, Price, Description, DescriptionFooter, Date)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
   `
   price = parseFloat(price).toFixed(2)
   try {
@@ -43,7 +43,7 @@ export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<Query
     if (checkQueryResult.rowCount > 0) {
       console.error(`There may be image with the name ${fileName} already in the Images table. The original will not be overwritten.`)
     } else {
-      const queryResult = await client.query(queryInsert, [fileName, 0, price, description])
+      const queryResult = await client.query(queryInsert, [fileName, title, 0, price, description, footer, date])
       console.log(`Successfully created image: ${fileName}`)
       return queryResult.rows[0]
     }

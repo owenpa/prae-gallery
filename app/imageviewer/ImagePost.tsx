@@ -29,8 +29,10 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
       <div className='h-full w-full flex flex-col'>
         <div className='h-1/5 flex flex-col self-end'>
           <NavigationMenu className='flex'>
-            <ToggleTheme />
             <NavigationMenuList>
+              <NavigationMenuItem>
+                <ToggleTheme />
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/commission" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>

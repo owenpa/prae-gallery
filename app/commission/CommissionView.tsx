@@ -40,8 +40,10 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
       <div className='flex flex-col h-full justify-center items-center'>
         <div className='h-1/5 flex flex-col self-end'>
           <NavigationMenu className='flex'>
-            <ToggleTheme />
             <NavigationMenuList>
+              <NavigationMenuItem>
+                <ToggleTheme />
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/commission" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>

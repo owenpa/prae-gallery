@@ -13,8 +13,7 @@ import {
   navigationMenuTriggerStyle
 } from '../ui/navigation-menu'
 
-
-export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, imagedesc, imageprice }: { setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string, imageprice: string }): JSX.Element {
+export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesrc, imagename, imagedesc, imageprice, imagetitle, imagefooter, imagedate }: { oneGalleryImage: boolean, setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string, imageprice: string, imagetitle: string, imagefooter: string, imagedate: string }): JSX.Element {
   const [previouslyLiked, setPreviouslyLiked] = useState(false)
   useEffect(() => {
     setPreviouslyLiked(localStorage.getItem(imagename) !== null)
@@ -57,11 +56,14 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className='h-3/5 flex flex flex-col justify-center gap-2'>
+        <div className='h-3/5 flex flex-col justify-center gap-2'>
+        <p className='text-3xl break-all'>{imagetitle}</p>
           <p className='text-3xl break-all'>{imagename}</p>
           <p className='text-gray-300'>{imageprice}</p>
           <p>{imagedesc}</p>
-          <ActionBar setIndexProp={setIndexProp} idx={idx} imagename={imagename} previouslyLiked={previouslyLiked}/>
+          <p className='text-gray-300'>{imagefooter}</p>
+          <p>{imagedate}</p>
+          {!oneGalleryImage && <ActionBar setIndexProp={setIndexProp} idx={idx} imagename={imagename} previouslyLiked={previouslyLiked}/>}
         </div>
         <div className='h-1/5'></div>
       </div>

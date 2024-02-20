@@ -30,9 +30,9 @@ async function seedGallery(client) {
       Likes INT DEFAULT 0,
       Shares INT DEFAULT 0,
       Price TEXT DEFAULT '0.00',
-      Description TEXT,
-      DescriptionFooter Text,
-      Date VARCHAR(255)
+      Description TEXT DEFAULT '-',
+      DescriptionFooter TEXT DEFAULT '-',
+      Date VARCHAR(255) 
     );`;
 
     console.log('------- Created Images table');

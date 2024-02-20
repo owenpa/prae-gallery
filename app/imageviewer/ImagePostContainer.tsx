@@ -93,8 +93,10 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
   }
 
   return (
-    <div id='image-post-container' className='max-w-full relative'>
-      {imageList.length > 1 ? imageList : <p>No images to display.</p>}
-    </div>
+    <>
+      <div id='image-post-container' className='max-w-full relative'>
+        {imageList.length > 1 ? imageList : <p>No images to display.</p>}
+      </div>
+    </>
   )
 }

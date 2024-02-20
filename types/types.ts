@@ -9,7 +9,10 @@ export interface User {
 export interface FileObj {
   imageid: number
   imagename: string
+  imagetitle: string
   likes: number
   price: string
   description: string
+  descriptionfooter: string
+  date: string
 }

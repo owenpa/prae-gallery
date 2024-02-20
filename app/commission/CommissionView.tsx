@@ -3,6 +3,9 @@
 import { useEffect } from 'react'
 import Image from 'next/image'
 import { X } from 'lucide-react'
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
+import Link from 'next/link'
+import ToggleTheme from '../ui/ToggleTheme'
 
 export default function CommissionView ({ imageNameList }: { imageNameList: string[] }): JSX.Element {
   const imageList = imageNameList.map((imageName, idx) => {
@@ -34,9 +37,30 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
       <div id='gallery-image-container' className='items-center justify-center relative'>
       {imageList.length > 1 ? imageList : <p>No images to display.</p>}
       </div>
-      <div className='flex h-full justify-center items-center'>
-        <div>
-          <h1 className='text-xl'>Commission status: <X className='inline' color='#ff7a7a' /></h1>
+      <div className='flex flex-col h-full justify-center items-center'>
+        <div className='h-1/5 flex flex-col self-end'>
+          <NavigationMenu className='flex'>
+            <ToggleTheme />
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link href="/commission" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Commission
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/login" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Login
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+        <div className='h-3/5 w-full flex flex-col justify-center'>
+          <h1 className='text-3xl'>Commission status: <X className='inline' color='#ff7a7a' /></h1>
           Prices may vary:
           <ul>
             <li>$$ : ???</li>
@@ -47,6 +71,7 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
           <p>Contact me here: </p>
           <a href='mailto:someone@example.com'>someone@example.com</a>
         </div>
+        <div className='h-1/5'></div>
       </div>
     </div>
   )

@@ -47,7 +47,7 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className='h-3/5 flex flex flex-col justify-center'>
+        <div className='h-3/5 flex flex flex-col justify-center gap-2'>
           <p className='text-3xl break-all'>{imagename}</p>
           <p>{imagedesc}</p>
           <ActionBar setIndexProp={setIndexProp} idx={idx} imagename={imagename} previouslyLiked={previouslyLiked}/>

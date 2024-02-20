@@ -34,6 +34,13 @@ export default function ImagePost ({ setIndexProp, idx, imagesrc, imagename, ima
                 <ToggleTheme />
               </NavigationMenuItem>
               <NavigationMenuItem>
+                <Link href="/" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Gallery
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/commission" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Commission

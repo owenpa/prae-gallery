@@ -9,9 +9,12 @@ export default async function DBImageControl (): Promise<JSX.Element> {
     imagePost = imageInfoArray.map((fileObj, idx) => {
       return (
         <div key={idx}>
+          <p>{fileObj.imagetitle}</p>
           <h1>{fileObj.imagename}</h1>
           <img className="max-w-80" src={`../assets/gallery/${fileObj.imagename}`}></img>
           <p>{fileObj.description}</p>
+          <p>{fileObj.descriptionfooter}</p>
+          <p>{fileObj.date}</p>
           <ImageDeleteButton parentFileName={fileObj.imagename} />
         </div>
       )

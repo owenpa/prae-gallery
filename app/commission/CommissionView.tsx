@@ -20,7 +20,7 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
   let index = 0
   function changeDisplayedImage (): void {
     const images = document.getElementById('gallery-image-container')?.children
-    if (images === undefined) {
+    if (images === undefined || images.length === 1) {
       return
     }
     for (let imgIdx = 0; imgIdx < images.length; imgIdx++) {
@@ -34,13 +34,12 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => changeDisplayedImage, [])
   if (imageList.length === 0) {
-    return (
-      <NoImages />
-    )
+    return <NoImages />
   } else {
     return (
       <div className='grid grid-cols-[50vw_40vw] gap-[5vw] w-full h-screen center justify-center'>
         <div id='gallery-image-container' className='items-center justify-center relative'>
+          {imageList}
         </div>
         <div className='flex flex-col h-full justify-center items-center'>
           <div className='h-1/5 flex flex-col self-end'>

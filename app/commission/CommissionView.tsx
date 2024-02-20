@@ -7,7 +7,7 @@ import { X } from 'lucide-react'
 export default function CommissionView ({ imageNameList }: { imageNameList: string[] }): JSX.Element {
   const imageList = imageNameList.map((imageName, idx) => {
     return (
-      <div key={idx} className={`commission-transition w-full h-full absolute flex justify-center ${idx === 0 ? '' : 'fadeout'}`}>
+      <div key={idx} className={`commission-transition w-full h-full absolute flex justify-center ${idx === 0 ? '' : 'commission-fadeout'}`}>
         <Image fill={true} className='object-contain' src={`/assets/gallery/${imageName}`} alt={`image in gallery #${idx}`} />
       </div>
     )
@@ -20,11 +20,11 @@ export default function CommissionView ({ imageNameList }: { imageNameList: stri
       return
     }
     for (let imgIdx = 0; imgIdx < images.length; imgIdx++) {
-      images[imgIdx].classList.add('fadeout')
+      images[imgIdx].classList.add('commission-fadeout')
     }
     index = ++index > images.length ? 1 : index
-    images[index - 1].classList.remove('fadeout')
-    setTimeout(changeDisplayedImage, 7000)
+    images[index - 1].classList.remove('commission-fadeout')
+    setTimeout(changeDisplayedImage, 5000)
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

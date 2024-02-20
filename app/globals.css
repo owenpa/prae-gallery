@@ -58,7 +58,9 @@
 .commission-transition {
   transition: 2s;
 }
-
+.commission-fadeout {
+  opacity: 0;
+}
 .fadeout {
   opacity: 0;
   animation: fadeoutanim 1s;

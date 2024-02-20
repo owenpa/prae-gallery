@@ -50,7 +50,9 @@
 }
 
 .image-stuff {
-  transition: 1s
+  transition: 1s;
+  max-height: 80vh;
+  margin: auto;
 }
 
 .commission-transition {
@@ -59,7 +61,36 @@
 
 .fadeout {
   opacity: 0;
-  visibility: hidden;
+  animation: fadeoutanim 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeoutanim {
+  0% {
+    visibility: visible;
+    opacity: 1}
+  99% {opacity: 0}
+  100% 
+  {visibility: hidden;}
+}
+
+.fadein {
+  opacity: 0;
+  animation: fadeinanim 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeinanim {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .fadeinup {

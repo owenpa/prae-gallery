@@ -32,7 +32,7 @@ export default function ActionBar ({ setIndexProp, idx, imagename, previouslyLik
   }
 
   return (
-    <div className='flex w-full content-evenly flex-wrap justify-evenly'>
+    <div className='flex w-full flex-wrap justify-between max-w-80'>
       <Button className='nav-button p-' onClick={() => { handleUpClick() }}>Up</Button>
       <div onClick={(clickEvent: MouseEvent<HTMLDivElement>) => { handleLikeClick(clickEvent) }} className='flex'>
         <button>

@@ -26,9 +26,13 @@ async function seedGallery(client) {
     CREATE TABLE IF NOT EXISTS Images (
       ImageID SERIAL PRIMARY KEY,
       ImageName VARCHAR(255) NOT NULL,
+      ImageTitle VARCHAR(255) DEFAULT 'Untitled Piece',
       Likes INT DEFAULT 0,
+      Shares INT DEFAULT 0,
       Price TEXT DEFAULT '0.00',
-      Description TEXT
+      Description TEXT,
+      DescriptionFooter Text,
+      Date VARCHAR(255)
     );`;
 
     console.log('------- Created Images table');

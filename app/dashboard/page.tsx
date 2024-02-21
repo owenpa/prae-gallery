@@ -1,5 +1,6 @@
 import ImageUpload from './ImageUpload'
 import DBImageControl from './DBImageControl'
+import PreviewAnalytics from './PreviewAnalytics'
 import { Button } from '../ui/button'
 import { signOut } from '../../auth'
 export default function ControlPanel (): JSX.Element {
@@ -14,6 +15,7 @@ export default function ControlPanel (): JSX.Element {
         </form>
       <ImageUpload/>
       <DBImageControl/>
+      <PreviewAnalytics />
     </div>
   )
 }

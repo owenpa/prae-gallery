@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { MoveLeft } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 function LoginButton (): JSX.Element {
   const { pending } = useFormStatus()
@@ -17,11 +17,10 @@ function LoginButton (): JSX.Element {
 
 export default function Login (): JSX.Element {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
-  const router = useRouter()
 
   return (
     <div className='w-screen h-screen flex items-center justify-center flex-col'>
-      <button className='p-2' onClick={() => { router.back() }}><MoveLeft className='hover:stroke-gray-300' color="#ffffff" /></button>
+      <Link href={'/'}><button className='p-2'><MoveLeft className='hover:stroke-gray-300' color="#ffffff" /></button></Link>
       <form className='grid gap-2' action={dispatch}>
         <Label htmlFor='email'>Email</Label>
         <Input id='email' name='email' placeholder='someone@example.com'/>

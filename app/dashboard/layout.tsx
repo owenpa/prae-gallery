@@ -4,7 +4,7 @@ export default function Layout ({ children }: Readonly<{ children: React.ReactNo
   return (
     <div className='flex'>
       <SideDashboardNav />
-      <main>{children}</main>
+      <main className='w-full'>{children}</main>
     </div>
   )
 }

@@ -33,11 +33,9 @@ export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesr
                 <ToggleTheme />
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/" passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} cursor-pointer`}>
                     Gallery
-                  </NavigationMenuLink>
-                </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/commission" legacyBehavior passHref>

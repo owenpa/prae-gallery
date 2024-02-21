@@ -5,8 +5,9 @@ import { authenticate } from '../../actions'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
-import { MoveLeft } from 'lucide-react'
+import { MoveLeft, Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
 
 function LoginButton (): JSX.Element {
   const { pending } = useFormStatus()
@@ -17,6 +18,25 @@ function LoginButton (): JSX.Element {
 
 export default function Login (): JSX.Element {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
+  const [viewPassword, setViewPassword] = useState(false)
+
+  function ShowPassword (): JSX.Element {
+    return (
+      <button onClick={() => { setViewPassword(!viewPassword) }} className='text-left'>
+        <Eye className='inline' />
+        <p className='inline'> Showing password</p>
+      </button>
+    )
+  }
+
+  function HidePassword (): JSX.Element {
+    return (
+      <button onClick={() => { setViewPassword(!viewPassword) }} className='text-left'>
+        <EyeOff className='inline' />
+        <p className='inline'> Hiding password</p>
+      </button>
+    )
+  }
 
   return (
     <div className='w-screen h-screen flex items-center justify-center flex-col'>
@@ -25,7 +45,8 @@ export default function Login (): JSX.Element {
         <Label htmlFor='email'>Email</Label>
         <Input id='email' name='email' placeholder='someone@example.com'/>
         <Label htmlFor='password'>Password</Label>
-        <Input id='password' name='password' type='password' placeholder='********'/>
+        <Input id='password' name='password' type={`${viewPassword ? 'text' : 'password'}`} placeholder='********'/>
+        {viewPassword ? <ShowPassword /> : <HidePassword />}
         <LoginButton />
         {(errorMessage !== null) && (
           <p className='text-red-800 text-lg'>{errorMessage}</p>

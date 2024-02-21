@@ -6,11 +6,11 @@ export default function ControlPanel (): JSX.Element {
   return (
     <div>
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form action={async (): Promise<void> => {
+        <form className='text-right' action={async (): Promise<void> => {
           'use server'
           await signOut()
         }}>
-          <Button> Sign Out</Button>
+          <Button>Sign Out</Button>
         </form>
       <ImageUpload/>
       <DBImageControl/>

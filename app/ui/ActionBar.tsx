@@ -39,7 +39,7 @@ export default function ActionBar ({ setIndexProp, idx, imagename, previouslyLik
           <Heart color='#ff7a7a' className={`hover:fill-red-400 pointer-events-none ${previouslyLiked ? 'fill-red-400' : ''}`} />
         </button>
       </div>
-      <button><Link className='hover:stroke-blue-300' /></button>
+      {/* <button><Link className='hover:stroke-blue-300' /></button> */}
       <Button className='nav-button' onClick={() => { handleDownClick() }}>Down</Button>
     </div>
   )

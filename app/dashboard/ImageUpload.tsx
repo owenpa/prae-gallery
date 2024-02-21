@@ -2,10 +2,13 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { format } from 'date-fns'
-import { Calendar as CalendarIcon } from 'lucide-react'
+import { Calendar as CalendarIcon, Upload } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui/button'
 import { Calendar } from '../ui/calendar'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Textarea } from '../ui/textarea'
 import {
   Popover,
   PopoverContent,
@@ -54,25 +57,29 @@ export default function ImageUpload (): JSX.Element {
 
   return (
     <>
-      <form className='flex flex-col w-96' id="image-upload-form" onSubmit={(submitEvent) => { handleFormUpload(submitEvent).catch((error) => { console.error(error) }) }}>
+      <form className='flex flex-col w-96 gap-2 items-center' id="image-upload-form" onSubmit={(submitEvent) => { handleFormUpload(submitEvent).catch((error) => { console.error(error) }) }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img hidden={true} src="" alt="Image Preview" className="image-preview" id="image-preview"></img>
-        <input onChange={(uploadEvent) => { handleImagePreview(uploadEvent) }} type="file" id="file" name="file" accept="image/*" />
-        <label htmlFor='title'>Title</label>
-        <input id='title' className='title' type='text'/>
-        <label htmlFor="price">Price</label>
-        <input id="price" className="price" type="number" required max="1000000000"/>
-        <label htmlFor="description">Description</label>
-        <input id="description" className="description" type="text"/>
-        <label htmlFor="footer">Footer</label>
-        <input id="footer" className="footer" type="text"/>
-        <br></br>
+        <label className="w-64 flex flex-col items-center px-4 py-6 rounded-lg tracking-wide border cursor-pointer">
+          <Upload />
+          <span className="mt-2 text-base leading-normal">Upload an image</span>
+          <input onChange={(uploadEvent) => { handleImagePreview(uploadEvent) }} type="file" id="file" name="file" accept="image/*" className="hidden" />
+        </label>
+        <Label className='self-start' htmlFor='title'>Title</Label>
+        <Input id='title' className='title' type='text'/>
+        <Label className='self-start' htmlFor="price">Price</Label>
+        <Input id="price" className="price" type="number" required max="1000000000"/>
+        <Label className='self-start' htmlFor="description">Description</Label>
+        <Textarea id="description" className="description"/>
+        <Label className='self-start' htmlFor="footer">Footer</Label>
+        <Input id="footer" className="footer" type="text"/>
+        <Label className='self-start'>Date of creation</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={'outline'}
               className={cn(
-                'w-[280px] justify-start text-left font-normal',
+                'w-full justify-start text-left font-normal',
                 !date && 'text-muted-foreground'
               )}
             >
@@ -89,7 +96,7 @@ export default function ImageUpload (): JSX.Element {
             />
           </PopoverContent>
         </Popover>
-        <input type="submit" />
+        <Button type='submit'>Submit</Button>
       </form>
     </>
   )

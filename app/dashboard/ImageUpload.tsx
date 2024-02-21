@@ -100,7 +100,10 @@ export default function ImageUpload (): JSX.Element {
             />
           </PopoverContent>
         </Popover>
-        <Button type='submit'>Submit</Button>
+        <div>
+        <Button className='m-2 mt-0' type='submit'>Submit</Button>
+        <Button onClick={() => { setDate(undefined) }} className=' bg-red-500 hover:bg-red-700 text-white' type='reset'>Clear Values</Button>
+        </div>
       </form>
     </>
   )

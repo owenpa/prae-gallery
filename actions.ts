@@ -150,3 +150,11 @@ export async function pullLocalImages (): Promise<string[]> {
     throw new Error('Failed to read local images')
   }
 }
+
+export async function fetchAnalytics (): Promise<string[]> {
+  try {
+
+  } catch (error) {
+    throw new Error('Failed to fetch analytics.')
+  }
+}

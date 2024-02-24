@@ -151,9 +151,19 @@ export async function pullLocalImages (): Promise<string[]> {
   }
 }
 
-export async function fetchAnalytics (): Promise<string[]> {
+export async function fetchAnalytics (): Promise<any[]> {
   try {
+    const client = await db.connect()
+    const query = 'SELECT * FROM Images'
+    const queryResult = await client.query(query)
 
+    console.log('Attempting to fetch analytics')
+    if (queryResult.rowCount === 0) {
+      console.error('No images were found while attempting to fetch analytics')
+    } else {
+      console.log('Successfully fetched analytics.')
+    }
+    return queryResult.rows
   } catch (error) {
     throw new Error('Failed to fetch analytics.')
   }

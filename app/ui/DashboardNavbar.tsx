@@ -7,7 +7,7 @@ export default function DashboardNavbar (): JSX.Element {
   return (
     <nav className='flex flex-wrap justify-evenly p-6'>
       <ul className='flex self-center justify-center gap-10'>
-      <Link href={'/dashboard'} className='flex gap-2' ><MoveLeft /> Back To Gallery</Link>
+      <Link href={'/'} className='flex gap-2' ><MoveLeft /> Back To Gallery</Link>
         <Link href={'/dashboard'}>General Overview</Link>
         <Link href={'/upload'}>Upload</Link>
         <Link href={'/manage'}>Manage Posts</Link>

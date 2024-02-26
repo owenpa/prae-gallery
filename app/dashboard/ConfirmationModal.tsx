@@ -4,17 +4,27 @@ import { useFormState } from 'react-dom'
 import { deleteImageInfoFromDb } from '../../actions'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
+import { useRouter } from 'next/navigation'
+import { X } from 'lucide-react'
 
 export default function ConfirmationModal (): JSX.Element {
   const [errorMessage, fireDeleteImage] = useFormState(deleteImageInfoFromDb, undefined)
+  const router = useRouter()
+
   if (errorMessage !== undefined) {
     console.log(errorMessage)
+    router.refresh()
+    const confirmationModal = document.getElementById('confirmation-modal');
+    (confirmationModal as HTMLDialogElement).close()
   }
 
   return (
     <dialog id='confirmation-modal'>
-      <div className='border flex px-4 py-6 rounded-lg tracking-wide border cursor-pointer max-h-[300px] max-w-xl gap-2'>
-        <h1 id="display-image-name" className="text-xl"></h1>
+      <div className='border px-4 py-6 rounded-lg tracking-wide border max-h-[300px] max-w-xl gap-2'>
+        <div className='flex items-center justify-between'>
+          <h1 id="display-image-name" className="text-xl font-semibold inline"></h1>
+          <button onClick={() => { (document.getElementById('confirmation-modal') as HTMLDialogElement).close() }}><X className='self-end justify-self-end'/></button>
+        </div>
         <form action={fireDeleteImage} className='gap-2 flex flex-col'>
           <label htmlFor="image-name">Are you sure you want to delete this image? Re-enter the filename to proceed.</label>
           <Input required name="image-name" id="image-name"></Input>

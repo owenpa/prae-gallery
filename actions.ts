@@ -83,6 +83,29 @@ export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
   }
 }
 
+export async function pullSingleImageInfoFromDb (imageName: string): Promise<FileObj | number> {
+  const listOfImages = await pullLocalImages()
+  try {
+    const queryImageName = listOfImages.filter((dbImageName) => dbImageName.toLowerCase() === imageName.toLocaleLowerCase())[0]
+    if (queryImageName === undefined) {
+      console.log(`The image '${imageName}' does not exist in the saved gallery.`)
+      return 0
+    }
+    console.log(queryImageName)
+    const client = await db.connect()
+    const query = `SELECT * FROM Images WHERE ImageName='${queryImageName}'`
+    const queryResult = await client.query(query)
+    if (queryResult.rowCount === 0) {
+      console.error('Error while pulling single image information from the database')
+    } else {
+      console.log(`Successful single image pull: ${imageName}`)
+    }
+    return queryResult.rows[0]
+  } catch (error) {
+    throw new Error('Failed to pull single image information from the database')
+  }
+}
+
 export async function deleteImageInfoFromDb (prevState: string[] | undefined, formData: FormData): Promise<string[] | undefined> {
   // TODO: validate image name ends in various file type extensions
   const imageNameToBeDeleted = formData.get('image-name')?.toString()

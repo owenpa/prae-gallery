@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import ToggleTheme from './ToggleTheme'
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "./navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from './navigation-menu'
 
 export default function NoImages (): JSX.Element {
   return (

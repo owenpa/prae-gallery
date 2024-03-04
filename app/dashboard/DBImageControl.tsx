@@ -1,6 +1,7 @@
 import { pullImageInfoFromDb } from '@/actions'
 import ImageDeleteButton from './ImageDeleteButton'
 import ConfirmationModal from './ConfirmationModal'
+import Image from 'next/image'
 
 export default async function DBImageControl (): Promise<JSX.Element> {
   const imageInfoArray = await pullImageInfoFromDb()
@@ -8,8 +9,10 @@ export default async function DBImageControl (): Promise<JSX.Element> {
   if (imageInfoArray.length !== 0) {
     imagePost = imageInfoArray.map((fileObj, idx) => {
       return (
-        <div className='border flex px-4 py-6 rounded-lg tracking-wide border cursor-pointer max-h-[200px] max-w-xl' key={idx}>
-          <img className="w-2/5 max-w-80 object-contain" src={`../assets/gallery/${fileObj.imagename}`}></img>
+        <div className='flex px-4 py-6 rounded-lg tracking-wide border cursor-pointer max-h-[200px] w-[80vw] max-w-xl' key={idx}>
+          <div className='w-full max-w-80 relative'>
+            <Image fill={true} objectFit='contain' src={`/assets/gallery/${fileObj.imagename}`} alt={`img${idx}`}></Image>
+          </div>
           <div className='w-3/5'>
             <p>{fileObj.imagetitle}</p>
             <h1>{fileObj.imagename}</h1>

@@ -190,3 +190,24 @@ export async function fetchAnalytics (): Promise<any[]> {
     throw new Error('Failed to fetch analytics.')
   }
 }
+
+export async function addShareViewToImage (imageName: string): Promise<void> {
+  if (typeof imageName !== 'string') {
+    console.error('Error while trying to add a share to an image. The image name was not of type string. ')
+    throw new Error()
+  }
+  try {
+    const client = await db.connect()
+    const query = `UPDATE Images SET Shares = Shares + 1 WHERE ImageName='${imageName}'`
+    const queryResult = await client.query(query)
+
+    console.log(`Attempting to add a share to "${imageName}"`)
+    if (queryResult.rowCount === 0) {
+      console.error(`Image '${imageName}' was not found or there was a problem executing the query.`)
+    } else {
+      console.log(`Successfully added a share to an image with the name ${imageName}.`)
+    }
+  } catch (error) {
+    throw new Error(`Error while attempting to like an image with name "${imageName}"`)
+  }
+}

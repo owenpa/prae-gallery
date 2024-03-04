@@ -11,6 +11,7 @@ export default function ToggleTheme (): JSX.Element {
   const [mounted, setMounted] = useState(false)
   const dark = theme === 'dark'
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { setMounted(true) })
   if (!mounted) {
     return <Button variant='ghost' size='icon' disabled={true}/>

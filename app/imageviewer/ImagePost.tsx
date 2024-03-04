@@ -61,7 +61,7 @@ export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesr
           <p>{imagedesc}</p>
           <p className='text-gray-500 italic'>{imagefooter}</p>
           <p>{imagedate}</p>
-          <ActionBar oneGalleryImage={oneGalleryImage} setIndexProp={setIndexProp} idx={idx} imagename={imagename} previouslyLiked={previouslyLiked}/>
+          <ActionBar centerItems={false} oneGalleryImage={oneGalleryImage} setIndexProp={setIndexProp} idx={idx} imagename={imagename} previouslyLiked={previouslyLiked}/>
         </div>
         <div className='h-1/5'></div>
       </div>

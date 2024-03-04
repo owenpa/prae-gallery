@@ -11,9 +11,7 @@ export default async function SoloImagePage ({ params }: { params: { imagename: 
   } else {
     const { imagename, imagetitle, price, description, descriptionfooter, date } = imageData as FileObj
     return (
-      <div>
-        <SoloImageViewer imagename={imagename} imagetitle={imagetitle} price={price} description={description} descriptionfooter={descriptionfooter} date={date} />
-      </div>
+      <SoloImageViewer imagename={imagename} imagetitle={imagetitle} price={price} description={description} descriptionfooter={descriptionfooter} date={date} />
     )
   }
 }

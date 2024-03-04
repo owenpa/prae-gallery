@@ -2,6 +2,7 @@ import { pullSingleImageInfoFromDb } from '@/actions'
 import SoloImageViewer from './SoloImageViewer'
 import ImageNoExist from './ImageNoExist'
 import type { FileObj } from '../../../types/types'
+import SoloImageNavbar from '@/app/ui/SoloImageNavbar'
 export default async function SoloImagePage ({ params }: { params: { imagename: string } }): Promise<JSX.Element> {
   const imageData = await pullSingleImageInfoFromDb(params.imagename)
   if (imageData === 0) {
@@ -11,7 +12,10 @@ export default async function SoloImagePage ({ params }: { params: { imagename: 
   } else {
     const { imagename, imagetitle, price, description, descriptionfooter, date } = imageData as FileObj
     return (
-      <SoloImageViewer imagename={imagename} imagetitle={imagetitle} price={price} description={description} descriptionfooter={descriptionfooter} date={date} />
+      <div className='flex flex-col w-full h-screen p-10'>
+        <SoloImageNavbar/>
+        <SoloImageViewer imagename={imagename} imagetitle={imagetitle} price={price} description={description} descriptionfooter={descriptionfooter} date={date} />
+      </div>
     )
   }
 }

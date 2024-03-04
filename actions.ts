@@ -91,7 +91,6 @@ export async function pullSingleImageInfoFromDb (imageName: string): Promise<Fil
       console.log(`The image '${imageName}' does not exist in the saved gallery.`)
       return 0
     }
-    console.log(queryImageName)
     const client = await db.connect()
     const query = `SELECT * FROM Images WHERE ImageName='${queryImageName}'`
     const queryResult = await client.query(query)

@@ -96,7 +96,7 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
             oneGalleryImage={oneGalleryImage}
             setIndexProp={setIndexProp}
             idx={idx}
-            imagesrc={`/assets/gallery/${fileObj.imagename}`}
+            imagesrc={fileObj.imageurl}
             imagename={fileObj.imagename}
             imagetitle={fileObj.imagetitle}
             imagedesc={fileObj.description}

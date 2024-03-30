@@ -4,7 +4,7 @@ import ActionBar from '@/app/ui/ActionBar'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export default function SoloImageViewer ({ imagename, imagetitle, price, description, descriptionfooter, date }: { imagename: string, imagetitle: string, price: string, description: string, descriptionfooter: string, date: string }): JSX.Element {
+export default function SoloImageViewer ({ imagename, imagetitle, imageurl, price, description, descriptionfooter, date }: { imagename: string, imagetitle: string, imageurl: string, price: string, description: string, descriptionfooter: string, date: string }): JSX.Element {
   const [previouslyLiked, setPreviouslyLiked] = useState(false)
   useEffect(() => {
     setPreviouslyLiked(localStorage.getItem(imagename) !== null)
@@ -15,7 +15,7 @@ export default function SoloImageViewer ({ imagename, imagetitle, price, descrip
     <div className='flex flex-col w-full h-full'>
       <div className='w-full h-full flex flex-col items-center text-center justify-center'>
         <div className='w-full h-[60%] relative'>
-          <Image className='image-stuff' src={`/assets/gallery/${imagename}`} fill={true} objectFit='contain' alt={'solo image'} />
+          <Image className='image-stuff' src={imageurl} fill={true} objectFit='contain' alt={'solo image'} />
         </div>
         <div className='flex flex-col items-center max-w-80 break-all'>
           <h1 className='text-5xl'>{imagetitle}</h1>

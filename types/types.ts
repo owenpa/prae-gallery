@@ -10,6 +10,7 @@ export interface FileObj {
   imageid: number
   imagename: string
   imagetitle: string
+  imageurl: string
   likes: number
   price: string
   description: string

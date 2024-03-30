@@ -15,13 +15,11 @@ import {
   PopoverTrigger
 } from '../ui/popover'
 import { useRouter } from 'next/navigation'
-import { type PutBlobResult } from '@vercel/blob'
 
 export default function ImageUpload (): JSX.Element {
   const [fileName, setFileName] = useState<string>('')
   const [date, setDate] = useState<Date>()
   const router = useRouter()
-  const [, setBlob] = useState<PutBlobResult | null>(null)
   const inputFileRef = useRef<HTMLInputElement>(null)
   async function handleFormUpload (submitEvent: FormEvent): Promise<void> {
     submitEvent.preventDefault()

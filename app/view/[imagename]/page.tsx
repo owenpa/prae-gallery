@@ -10,11 +10,11 @@ export default async function SoloImagePage ({ params }: { params: { imagename: 
       <ImageNoExist />
     )
   } else {
-    const { imagename, imagetitle, price, description, descriptionfooter, date } = imageData as FileObj
+    const { imagename, imagetitle, imageurl, price, description, descriptionfooter, date } = imageData as FileObj
     return (
       <div className='flex flex-col w-full h-screen p-10'>
         <SoloImageNavbar/>
-        <SoloImageViewer imagename={imagename} imagetitle={imagetitle} price={price} description={description} descriptionfooter={descriptionfooter} date={date} />
+        <SoloImageViewer imagename={imagename} imageurl={imageurl} imagetitle={imagetitle} price={price} description={description} descriptionfooter={descriptionfooter} date={date} />
       </div>
     )
   }

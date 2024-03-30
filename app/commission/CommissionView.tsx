@@ -7,12 +7,13 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import Link from 'next/link'
 import ToggleTheme from '../ui/ToggleTheme'
 import NoImages from '../ui/NoImages'
+import { type FileObj } from '@/types/types'
 
-export default function CommissionView ({ imageNameList }: { imageNameList: string[] }): JSX.Element {
-  const imageList = imageNameList.map((imageName, idx) => {
+export default function CommissionView ({ imageDataList }: { imageDataList: FileObj[] }): JSX.Element {
+  const imageList = imageDataList.map((imageData, idx) => {
     return (
       <div key={idx} className={`commission-transition w-full h-full absolute flex justify-center ${idx === 0 ? '' : 'commission-fadeout'}`}>
-        <Image fill={true} className='object-contain image-stuff' src={`/assets/gallery/${imageName}`} alt={`image in gallery #${idx}`} />
+        <Image fill={true} className='object-contain image-stuff' src={imageData.imageurl} alt={`image in gallery #${idx}`} />
       </div>
     )
   })

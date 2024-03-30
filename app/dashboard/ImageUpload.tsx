@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent, useRef } from 'react'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon, Upload } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -15,32 +15,39 @@ import {
   PopoverTrigger
 } from '../ui/popover'
 import { useRouter } from 'next/navigation'
+import { type PutBlobResult } from '@vercel/blob'
 
 export default function ImageUpload (): JSX.Element {
   const [fileName, setFileName] = useState<string>('')
   const [date, setDate] = useState<Date>()
   const router = useRouter()
+  const [, setBlob] = useState<PutBlobResult | null>(null)
+  const inputFileRef = useRef<HTMLInputElement>(null)
   async function handleFormUpload (submitEvent: FormEvent): Promise<void> {
     submitEvent.preventDefault()
-    if (date !== undefined) {
-      const htmlFormAsObj = {
-        fileName,
-        title: (document.getElementById('title') as HTMLInputElement).value,
-        price: (document.getElementById('price') as HTMLInputElement).value,
-        description: (document.getElementById('description') as HTMLInputElement).value,
-        footer: (document.getElementById('footer') as HTMLInputElement).value,
-        date: format(date, 'MM/dd/yyyy')
-      }
-      if (htmlFormAsObj.price !== null) htmlFormAsObj.price = parseFloat(htmlFormAsObj.price).toFixed(2)
-      const URLParams = new URLSearchParams(htmlFormAsObj)
-      const fileFormData = new FormData((submitEvent.target as HTMLFormElement))
-      const response = await fetch(`api/upload?${URLParams.toString()}`, {
-        method: 'POST',
-        body: fileFormData
-      })
-      if (response.status === 200) {
-        router.refresh()
-      }
+    if (date === undefined) return
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+    if (inputFileRef.current === null || inputFileRef.current.files === null) return
+
+    const htmlFormAsObj = {
+      fileName,
+      title: (document.getElementById('title') as HTMLInputElement).value,
+      price: (document.getElementById('price') as HTMLInputElement).value,
+      description: (document.getElementById('description') as HTMLInputElement).value,
+      footer: (document.getElementById('footer') as HTMLInputElement).value,
+      date: format(date, 'MM/dd/yyyy')
+    }
+
+    if (htmlFormAsObj.price !== null) htmlFormAsObj.price = parseFloat(htmlFormAsObj.price).toFixed(2)
+    const URLParams = new URLSearchParams(htmlFormAsObj)
+    const file = inputFileRef.current.files[0]
+    const response = await fetch(`api/upload?${URLParams.toString()}`, {
+      method: 'POST',
+      body: file
+    })
+
+    if (response.status === 200) {
+      router.refresh()
     }
   }
 
@@ -67,7 +74,7 @@ export default function ImageUpload (): JSX.Element {
         <label className="w-64 flex flex-col items-center px-4 py-6 rounded-lg tracking-wide border cursor-pointer">
           <Upload />
           <span className="mt-2 text-base leading-normal">Upload an image</span>
-          <input onChange={(uploadEvent) => { handleImagePreview(uploadEvent) }} type="file" id="file" name="file" accept="image/*" className="hidden" />
+          <input ref={inputFileRef} onChange={(uploadEvent) => { handleImagePreview(uploadEvent) }} type="file" id="file" name="file" accept="image/*" className="hidden" />
         </label>
         <Label className='self-start' htmlFor='title'>Title</Label>
         <Input id='title' className='title' type='text'/>

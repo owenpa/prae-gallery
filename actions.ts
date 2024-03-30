@@ -5,8 +5,7 @@ import { AuthError } from 'next-auth'
 import type { FileObj, ImageDataToDB } from './types/types'
 import { db } from '@vercel/postgres'
 import type { QueryResult } from '@vercel/postgres'
-import { readdirSync } from 'fs'
-import { unlink } from 'fs/promises'
+import { list } from '@vercel/blob'
 
 export async function authenticate (prevState: string | undefined, formData: FormData): Promise<string | undefined> {
   try {
@@ -27,15 +26,15 @@ export async function authenticate (prevState: string | undefined, formData: For
 export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<QueryResult | undefined> {
   console.log('Attempting to connect to database to add image information')
   const client = await db.connect()
-  let { fileName, title, price, description, footer, date } = imageData
+  let { fileName, title, imageurl, price, description, footer, date } = imageData
   const checkQuery = `
     SELECT *
     FROM Images
     WHERE ImageName = $1
   `
   const queryInsert = `
-    INSERT INTO Images (ImageName, ImageTitle, Likes, Price, Description, DescriptionFooter, Date)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO Images (ImageName, ImageTitle, ImageUrl, Likes, Price, Description, DescriptionFooter, Date)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   `
   price = parseFloat(price).toFixed(2)
   try {
@@ -43,7 +42,7 @@ export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<Query
     if (checkQueryResult.rowCount > 0) {
       console.error(`There may be image with the name ${fileName} already in the Images table. The original will not be overwritten.`)
     } else {
-      const queryResult = await client.query(queryInsert, [fileName, title, 0, price, description, footer, date])
+      const queryResult = await client.query(queryInsert, [fileName, title, imageurl, 0, price, description, footer, date])
       console.log(`Successfully created image: ${fileName}`)
       return queryResult.rows[0]
     }
@@ -54,21 +53,16 @@ export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<Query
 
 export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
   try {
-    const localImages = readdirSync('./public/assets/gallery')
-    const queryAbleImageNames = localImages.reduce((nameAcc: string[], imageName) => {
-      // eslint-disable-next-line no-useless-escape
-      if (!(/(^|\/)\.[^\/\.]/g).test(imageName)) {
-        nameAcc.push(`'${imageName}'`)
-      }
-      return nameAcc
-    }, []).join(', ')
+    const { blobs } = await list()
+    const blobsData = Array.from(blobs)
+    const queryAbleImageNames = blobsData.map(imageData => `'${imageData.pathname}'`).join(', ')
     if (queryAbleImageNames.length === 0) {
       return []
     }
     const client = await db.connect()
     const query = `
     SELECT * FROM Images
-    WHERE ImageName IN (${queryAbleImageNames})    
+    WHERE ImageName IN (${queryAbleImageNames})
     `
     const queryResult = await client.query(query)
 
@@ -84,7 +78,8 @@ export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
 }
 
 export async function pullSingleImageInfoFromDb (imageName: string): Promise<FileObj | number> {
-  const listOfImages = await pullLocalImages()
+  const { blobs } = await list()
+  const listOfImages = blobs.map(image => image.pathname.toLowerCase())
   try {
     const queryImageName = listOfImages.filter((dbImageName) => dbImageName.toLowerCase() === imageName.toLocaleLowerCase())[0]
     if (queryImageName === undefined) {
@@ -125,11 +120,6 @@ export async function deleteImageInfoFromDb (prevState: string[] | undefined, fo
     }
     console.log(`Attempting to delete image with the name '${imageNameToBeDeleted}' from the local gallery.`)
 
-    const localImages = readdirSync('./public/assets/gallery')
-    if (localImages.includes(imageNameToBeDeleted)) {
-      await unlink(`./public/assets/gallery/${imageNameToBeDeleted}`)
-      console.log(`Successfully deleted an image with the name ${imageNameToBeDeleted} from the local gallery.`)
-    }
     return queryResult.rows
   } catch (error) {
     throw new Error(`Error while attempting to delete an image with name "${imageNameToBeDeleted}" from the database.`)
@@ -154,22 +144,6 @@ export async function addLikeToImage (imageName: string): Promise<void> {
     }
   } catch (error) {
     throw new Error(`Error while attempting to like an image with name "${imageName}"`)
-  }
-}
-
-export async function pullLocalImages (): Promise<string[]> {
-  try {
-    const localImages = readdirSync('./public/assets/gallery')
-    const queryAbleImageNames = localImages.reduce((nameAcc: string[], imageName) => {
-      // eslint-disable-next-line no-useless-escape
-      if (!(/(^|\/)\.[^\/\.]/g).test(imageName)) {
-        nameAcc.push(imageName)
-      }
-      return nameAcc
-    }, [])
-    return queryAbleImageNames
-  } catch (error) {
-    throw new Error('Failed to read local images')
   }
 }
 

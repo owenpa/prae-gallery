@@ -27,12 +27,13 @@ async function seedGallery(client) {
       ImageID SERIAL PRIMARY KEY,
       ImageName VARCHAR(255) NOT NULL,
       ImageTitle VARCHAR(255) DEFAULT 'Untitled Piece',
+      ImageUrl TEXT NOT NULL,
       Likes INT DEFAULT 0,
       Shares INT DEFAULT 0,
       Price TEXT DEFAULT '0.00',
       Description TEXT DEFAULT '-',
       DescriptionFooter TEXT DEFAULT '-',
-      Date VARCHAR(255) 
+      Date VARCHAR(255)
     );`;
 
     console.log('------- Created Images table');

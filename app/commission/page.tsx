@@ -1,10 +1,10 @@
 'use server'
-import { pullLocalImages } from '../../actions'
+import { pullImageInfoFromDb } from '../../actions'
 import CommissionView from './CommissionView'
 
 export default async function Commission (): Promise<JSX.Element> {
-  const imageNameList = await pullLocalImages()
+  const imageDataList = await pullImageInfoFromDb()
   return (
-    <CommissionView imageNameList={imageNameList} />
+    <CommissionView imageDataList={imageDataList} />
   )
 }

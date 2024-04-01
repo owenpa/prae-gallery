@@ -12,7 +12,7 @@ export default function ImageDeleteButton ({ parentFileName }: { parentFileName:
 
   return (
     <>
-      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id={`button-${parentFileName}`} onClick={() => { openModal() }}>
+      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded max-h-10 self-center" id={`button-${parentFileName}`} onClick={() => { openModal() }}>
         Delete
       </button>
     </>

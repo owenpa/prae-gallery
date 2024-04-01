@@ -9,7 +9,7 @@ export default async function DBImageControl (): Promise<JSX.Element> {
   if (imageInfoArray.length !== 0) {
     imagePost = imageInfoArray.map((fileObj, idx) => {
       return (
-        <div className='flex px-4 py-6 rounded-lg tracking-wide border cursor-pointer max-h-[200px] w-[80vw] max-w-xl' key={idx}>
+        <div className='flex px-4 py-6 rounded-lg tracking-wide border max-h-[200px] w-[80vw] max-w-xl' key={idx}>
           <div className='w-full max-w-80 relative'>
             <Image fill={true} objectFit='contain' src={fileObj.imageurl} alt={`img${idx}`}></Image>
           </div>

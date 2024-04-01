@@ -6,10 +6,12 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { useRouter } from 'next/navigation'
 import { X } from 'lucide-react'
+import { useState } from 'react'
 
 export default function ConfirmationModal (): JSX.Element {
   const [errorMessage, fireDeleteImage] = useFormState(deleteImageInfoFromDb, undefined)
   const router = useRouter()
+  const [canSubmit, setCanSubmit] = useState(false)
 
   if (errorMessage !== undefined) {
     console.log(errorMessage)
@@ -27,9 +29,11 @@ export default function ConfirmationModal (): JSX.Element {
         </div>
         <form action={fireDeleteImage} className='gap-2 flex flex-col'>
           <label htmlFor="image-name">Are you sure you want to delete this image? Re-enter the filename to proceed.</label>
-          <Input required name="image-name" id="image-name"></Input>
-          <Button id="submit-delete" className="bg-red-500 hover:bg-red-700 text-white max-w-28" type="submit">Submit</Button>
-        </form>
+          <div className='flex gap-2'>
+            <Input required name="image-name" id="image-name" onInput={(e) => { (e.target as HTMLInputElement).value === document.getElementById('display-image-name')?.innerText ? setCanSubmit(true) : setCanSubmit(false) }}></Input>
+            <Button variant={'ghost'} id="submit-delete" className={`${canSubmit ? 'bg-red-500 hover:bg-red-700' : ''} text-white max-w-28`} type="submit">Delete</Button>
+          </div>
+          </form>
         </div>
       </dialog>
   )

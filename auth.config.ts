@@ -11,7 +11,7 @@ export const authConfig = {
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
       const isOnLoginPage = nextUrl.pathname.startsWith('/login')
       const isUploading = nextUrl.pathname.startsWith('/upload')
-      const isOnCreatePostPage = nextUrl.pathname.startsWith('/create')
+      const isOnCreatePostPage = nextUrl.pathname.startsWith('/dashboard/create')
       const isFetchingAnalytics = nextUrl.pathname.startsWith('/api/analytics')
       if (isOnDashboard) {
         return isLoggedIn

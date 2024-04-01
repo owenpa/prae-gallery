@@ -17,7 +17,7 @@ export default async function DBImageControl (): Promise<JSX.Element> {
           <div className='w-3/5'>
             <p className='font-semibold'>{fileObj.imagetitle}</p>
             <h1 className='font-semibold'>{fileObj.imagename}</h1>
-            <p>{fileObj.description}</p>
+            <p className='limited-description'>{fileObj.description}</p>
             <p className='text-gray-500 italic'>{fileObj.descriptionfooter}</p>
             <p>{fileObj.date}</p>
           </div>

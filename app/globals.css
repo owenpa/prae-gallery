@@ -55,6 +55,13 @@
   margin: auto;
 }
 
+.limited-description {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
 .commission-transition {
   transition: 2s;
 }

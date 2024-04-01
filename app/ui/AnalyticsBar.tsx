@@ -19,12 +19,12 @@ export default function AnalyticsBar ({ data, toggleable }: { data: any[], toggl
   }
   function findAvgLikes (): number {
     if (totalLikes === 0) { return 0 }
-    return (Math.round((totalPosts / totalLikes) + Number.EPSILON) * 100) / 100
+    return Number((totalLikes / totalPosts).toFixed(2))
   }
 
   function findAvgShares (): number {
     if (totalShares === 0) { return 0 }
-    return (Math.round((totalPosts / totalShares) + Number.EPSILON) * 100) / 100
+    return Number((totalShares / totalPosts).toFixed(2))
   }
 
   const totalPosts = findTotalPosts()

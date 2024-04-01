@@ -22,7 +22,7 @@ export default function ConfirmationModal (): JSX.Element {
 
   return (
     <dialog id='confirmation-modal'>
-      <div className='border px-4 py-6 rounded-lg tracking-wide border max-h-[300px] max-w-xl gap-2'>
+      <div className='border px-4 py-6 rounded-lg tracking-wide max-h-[300px] max-w-xl gap-2'>
         <div className='flex items-center justify-between'>
           <h1 id="display-image-name" className="text-xl font-semibold inline"></h1>
           <button onClick={() => { (document.getElementById('confirmation-modal') as HTMLDialogElement).close() }}><X className='self-end justify-self-end'/></button>

@@ -12,6 +12,7 @@ export interface FileObj {
   imagetitle: string
   imageurl: string
   likes: number
+  shares: number
   price: string
   description: string
   descriptionfooter: string

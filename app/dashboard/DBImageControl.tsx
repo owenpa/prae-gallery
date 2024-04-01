@@ -2,6 +2,7 @@ import { pullImageInfoFromDb } from '@/actions'
 import ImageDeleteButton from './ImageDeleteButton'
 import ConfirmationModal from './ConfirmationModal'
 import Image from 'next/image'
+import { Link } from 'lucide-react'
 
 export default async function DBImageControl (): Promise<JSX.Element> {
   const imageInfoArray = await pullImageInfoFromDb()
@@ -20,7 +21,12 @@ export default async function DBImageControl (): Promise<JSX.Element> {
             <p className='text-gray-500 italic'>{fileObj.descriptionfooter}</p>
             <p>{fileObj.date}</p>
           </div>
-          <ImageDeleteButton parentFileName={fileObj.imagename} />
+          <div className='flex flex-col justify-evenly'>
+            <button>
+              <Link className='hover:stroke-blue-300 w-10' />
+            </button>
+            <ImageDeleteButton parentFileName={fileObj.imagename}></ImageDeleteButton>
+          </div>
         </div>
       )
     })

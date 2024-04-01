@@ -1,5 +1,7 @@
 'use client'
 
+import { X } from 'lucide-react'
+
 export default function ImageDeleteButton ({ parentFileName }: { parentFileName: string }): JSX.Element {
   function openModal (): void {
     const confirmationModal = document.getElementById('confirmation-modal');
@@ -12,8 +14,8 @@ export default function ImageDeleteButton ({ parentFileName }: { parentFileName:
 
   return (
     <>
-      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded max-h-10 self-center" id={`button-${parentFileName}`} onClick={() => { openModal() }}>
-        Delete
+      <button id={`button-${parentFileName}`} onClick={() => { openModal() }}>
+        <X className="hover:stroke-red-500 w-10"></X>
       </button>
     </>
   )

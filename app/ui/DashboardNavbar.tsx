@@ -8,11 +8,11 @@ export default function DashboardNavbar (): JSX.Element {
     <nav className='flex flex-wrap justify-evenly p-6'>
       <ul className='flex self-center justify-center gap-10'>
       <Link href={'/'} className='flex gap-2' ><MoveLeft /> Back To Gallery</Link>
-        <Link href={'/dashboard'}>General Overview</Link>
-        <Link href={'/upload'}>Upload</Link>
+        <Link href={'/dashboard'}>Dashboard</Link>
+        <Link href={'/create'}>Create Post</Link>
         <Link href={'/manage'}>Manage Posts</Link>
         <Link href={'/analytics'}>Analytics</Link>
-        <Link href={'/view'}>View All</Link>
+        <Link href={'/overview'}>View All</Link>
       </ul>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form className='text-right self-end' action={async (): Promise<void> => {

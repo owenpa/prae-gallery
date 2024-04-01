@@ -39,13 +39,13 @@ export default function ImageUpload (): JSX.Element {
     if (htmlFormAsObj.price !== null) htmlFormAsObj.price = parseFloat(htmlFormAsObj.price).toFixed(2)
     const URLParams = new URLSearchParams(htmlFormAsObj)
     const file = inputFileRef.current.files[0]
-    const response = await fetch(`api/upload?${URLParams.toString()}`, {
+    const response = await fetch(`/api/upload?${URLParams.toString()}`, {
       method: 'POST',
       body: file
     })
 
     if (response.status === 200) {
-      router.refresh()
+      router.push('/dashboard', { scroll: true })
     }
   }
 

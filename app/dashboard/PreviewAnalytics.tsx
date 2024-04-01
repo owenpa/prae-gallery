@@ -8,7 +8,7 @@ export default async function PreviewAnalytics (): Promise<JSX.Element> {
 
   return (
     <div className='p-2 w-full flex flex-col text-center items-center'>
-      <AnalyticsBar data={data} />
+      <AnalyticsBar data={data} toggleable={true} />
     </div>
   )
 }

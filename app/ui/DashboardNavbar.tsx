@@ -12,6 +12,7 @@ export default function DashboardNavbar (): JSX.Element {
         <Link href={'/dashboard/create'}>Create Post</Link>
         <Link href={'/dashboard/manage'}>Manage Posts</Link>
         <Link href={'/dashboard/analytics'}>Analytics</Link>
+        <Link href='/dashboard/commission'>Commissions</Link>
       </ul>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form className='text-right self-end' action={async (): Promise<void> => {

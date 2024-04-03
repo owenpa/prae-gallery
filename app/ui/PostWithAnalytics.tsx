@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Button } from './button'
 // Display the percentile or rank of the post's likes/shares
 export default function PostWithAnalytics ({ imageID, imageName, imageTitle, imageUrl, likes, shares, price, description, descriptionfooter, date }: { imageID: number, imageName: string, imageTitle: string, imageUrl: string, likes: number, shares: number, price: string, description: string, descriptionfooter: string, date: string }): JSX.Element {
   const today = new Date()
@@ -19,7 +20,9 @@ export default function PostWithAnalytics ({ imageID, imageName, imageTitle, ima
         </div>
       </div>
       <div className='flex flex-col self-center'>
-        <p>View</p>
+        <a href={`/view/${imageName}`} target='_blank'>
+          <Button className='text-white' variant={'link'}>View</Button>
+        </a>
       </div>
     </div>
   )

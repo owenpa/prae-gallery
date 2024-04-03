@@ -8,14 +8,19 @@ export default function PostWithAnalytics ({ imageID, imageName, imageTitle, ima
       <Image className='m-h-[80vh] m-0' height={250} width={250} alt='looks like an image' src={imageUrl} />
       <div className='flex flex-col justify-around'>
         <div>
-          <p >{imageTitle} - {date}</p>
+          <p className='font-bold'>{imageTitle} - {date}</p>
           <p className='inline text-gray-400'>
-            {Math.round((today.getTime() - postsDate.getTime()) / 86400000) - 1} day(s) since upload </p>
+            {Math.round((today.getTime() - postsDate.getTime()) / 86400000) - 1} day(s) since upload
+          </p>
           <p>{price}</p>
         </div>
         <div>
-          <p>Likes: {likes} <p className='inline text-gray-300'>({likes / totalLikes * 100}%)</p></p>
-          <p>Shares: {shares} <p className='inline text-gray-300'>({shares / totalShares * 100}%)</p></p>
+          <p className='inline'>Likes: {likes} </p>
+          <p className='inline text-gray-400'>({likes / totalLikes * 100}%)</p>
+          <div>
+            <p className='inline'>Shares: {shares} </p>
+            <p className='inline text-gray-400'>({shares / totalShares * 100}%)</p>
+          </div>
         </div>
       </div>
       <div className='flex flex-col self-center'>

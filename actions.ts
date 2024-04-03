@@ -126,6 +126,50 @@ export async function deleteImageInfoFromDb (prevState: string[] | undefined, fo
   }
 }
 
+export async function editImageInfoInDb (prevState: string[] | undefined, formData: FormData): Promise<string[] | undefined> {
+  if (formData === undefined) return
+  try {
+    if (formData.get('image-title') === null ||
+      formData.get('image-description') === null ||
+      formData.get('image-price') === null ||
+      formData.get('image-footer') === null ||
+      formData.get('image-date') === null ||
+      formData.get('image-name') === null
+    ) {
+      throw new Error(`One of the follow fields is null:
+      Title: ${formData.get('image-title') as string}
+      Description: ${formData.get('image-description') as string}
+      Price: ${formData.get('image-price') as string}
+      Footer: ${formData.get('image-footer') as string}
+      Date: ${formData.get('image-date') as string}
+      Name: ${formData.get('image-name') as string}
+      `)
+    }
+    let reformattedDate = formData.get('image-date') as string | string[]
+    reformattedDate = (reformattedDate as string).split('-')
+    reformattedDate = `${reformattedDate[1]}/${reformattedDate[2]}/${reformattedDate[0]}`
+    const client = await db.connect()
+    const query = `UPDATE Images
+    SET ImageTitle = '${(formData.get('image-title') as string).replaceAll("'", "''")}', 
+    Price = '${formData.get('image-price') as string}', 
+    Description = '${(formData.get('image-description') as string).replaceAll("'", "''")}', 
+    DescriptionFooter = '${(formData.get('image-footer') as string).replaceAll("'", "''")}', 
+    Date = '${reformattedDate}' 
+    WHERE ImageName = '${formData.get('image-name') as string}';`
+
+    const queryResult = await client.query(query)
+    console.log(`Attempting to update an image with the name "${formData.get('image-name') as string}"`)
+    if (queryResult.rowCount === 0) {
+      console.error(`Image ${formData.get('image-name') as string} was not found or there was a problem executing the query.`)
+    } else {
+      console.log(`Successfully edited an image with the name ${formData.get('image-name') as string}`)
+    }
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error while attempting to edit an image's info")
+  }
+}
+
 export async function addLikeToImage (imageName: string): Promise<void> {
   if (typeof imageName !== 'string') {
     console.error('Error while trying to like an image. The image name was not of type string. ')

@@ -1,8 +1,10 @@
 import { pullImageInfoFromDb } from '@/actions'
 import ImageDeleteButton from './ImageDeleteButton'
-import ConfirmationModal from './ConfirmationModal'
+import DeleteConfirmationModal from './DeleteConfirmationModal'
 import Image from 'next/image'
-import { Link, SquarePen } from 'lucide-react'
+import { Link } from 'lucide-react'
+import ImageEditButton from './ImageEditButton'
+import EditModal from './EditModal'
 
 export default async function DBImageControl (): Promise<JSX.Element> {
   const imageInfoArray = await pullImageInfoFromDb()
@@ -25,10 +27,7 @@ export default async function DBImageControl (): Promise<JSX.Element> {
             <button>
               <Link className='hover:stroke-blue-300 w-10' />
             </button>
-            <button>
-              {/* TODO */}
-              <SquarePen className='hover:stroke-gray-300 w-10'/>
-            </button>
+            <ImageEditButton imageID={fileObj.imageid} imageName={fileObj.imagename} imageTitle={fileObj.imagetitle} price={fileObj.price} description={fileObj.description} descriptionfooter={fileObj.descriptionfooter} date={fileObj.date}/>
             <ImageDeleteButton parentFileName={fileObj.imagename}></ImageDeleteButton>
           </div>
         </div>
@@ -39,7 +38,8 @@ export default async function DBImageControl (): Promise<JSX.Element> {
   return (
     <div>
       {imageInfoArray.length > 0 ? imagePost : <p>No images to display.</p>}
-      <ConfirmationModal />
+      <EditModal/>
+      <DeleteConfirmationModal />
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function CommissionView ({ imageDataList }: { imageDataList: File
   const imageList = imageDataList.map((imageData, idx) => {
     return (
       <div key={idx} className={`commission-transition w-full h-full absolute flex justify-center ${idx === 0 ? '' : 'commission-fadeout'}`}>
-        <Image fill={true} className='object-contain image-stuff' src={imageData.imageurl} alt={`image in gallery #${idx}`} />
+        <Image fill={true} sizes='1024px' className='object-contain image-stuff' src={imageData.imageurl} alt={`image in gallery #${idx}`} />
       </div>
     )
   })

@@ -23,7 +23,7 @@ export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesr
   return (
     <div className='grid grid-cols-[50vw_40vw] gap-[5vw] absolute center w-full justify-center h-screen gap'>
       <div className='relative flex justify-center content-center'>
-        <Image className='image-stuff' fill={true} objectFit='contain' src={imagesrc} alt={`image in gallery #${idx}`} />
+        <Image className='image-stuff' fill={true} sizes='1024px' objectFit='contain' src={imagesrc} alt={`image in gallery #${idx}`} />
       </div>
       <div className='h-full w-full flex flex-col'>
         <div className='h-1/5 flex flex-col self-end'>

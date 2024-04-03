@@ -15,7 +15,7 @@ export default function SoloImageViewer ({ imagename, imagetitle, imageurl, pric
     <div className='flex flex-col w-full h-full'>
       <div className='w-full h-full flex flex-col items-center text-center justify-center'>
         <div className='w-full h-[60%] relative'>
-          <Image className='image-stuff' src={imageurl} fill={true} objectFit='contain' alt={'solo image'} />
+          <Image className='image-stuff' sizes='1024px' src={imageurl} fill={true} objectFit='contain' alt={'solo image'} />
         </div>
         <div className='flex flex-col items-center max-w-80 break-all'>
           <h1 className='text-5xl'>{imagetitle}</h1>

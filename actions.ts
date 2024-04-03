@@ -79,7 +79,7 @@ export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
 
 export async function pullSingleImageInfoFromDb (imageName: string): Promise<FileObj | number> {
   const { blobs } = await list()
-  const listOfImages = blobs.map(image => image.pathname.toLowerCase())
+  const listOfImages = blobs.map(image => image.pathname)
   try {
     const queryImageName = listOfImages.filter((dbImageName) => dbImageName.toLowerCase() === imageName.toLocaleLowerCase())[0]
     if (queryImageName === undefined) {

@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { Button } from './button'
-// Display the percentile or rank of the post's likes/shares
-export default function PostWithAnalytics ({ imageID, imageName, imageTitle, imageUrl, likes, shares, price, description, descriptionfooter, date }: { imageID: number, imageName: string, imageTitle: string, imageUrl: string, likes: number, shares: number, price: string, description: string, descriptionfooter: string, date: string }): JSX.Element {
+export default function PostWithAnalytics ({ imageID, imageName, imageTitle, imageUrl, likes, shares, price, description, descriptionfooter, date, totalLikes, totalShares }: { imageID: number, imageName: string, imageTitle: string, imageUrl: string, likes: number, shares: number, price: string, description: string, descriptionfooter: string, date: string, totalLikes: number, totalShares: number }): JSX.Element {
   const today = new Date()
   const postsDate = new Date(date)
   return (
@@ -15,13 +14,13 @@ export default function PostWithAnalytics ({ imageID, imageName, imageTitle, ima
           <p>{price}</p>
         </div>
         <div>
-          <p>Likes: {likes}</p>
-          <p>Shares: {shares}</p>
+          <p>Likes: {likes} <p className='inline text-gray-300'>({likes / totalLikes * 100}%)</p></p>
+          <p>Shares: {shares} <p className='inline text-gray-300'>({shares / totalShares * 100}%)</p></p>
         </div>
       </div>
       <div className='flex flex-col self-center'>
         <a href={`/view/${imageName}`} target='_blank'>
-          <Button className='text-white' variant={'link'}>View</Button>
+          <Button className='text-white ' variant={'link'}>View</Button>
         </a>
       </div>
     </div>

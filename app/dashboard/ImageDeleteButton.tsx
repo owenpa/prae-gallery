@@ -4,9 +4,9 @@ import { X } from 'lucide-react'
 
 export default function ImageDeleteButton ({ parentFileName }: { parentFileName: string }): JSX.Element {
   function openModal (): void {
-    const confirmationModal = document.getElementById('confirmation-modal');
+    const confirmationModal = document.getElementById('delete-confirmation-modal');
     (confirmationModal as HTMLDialogElement).showModal()
-    const displayImageName = document.getElementById('display-image-name')
+    const displayImageName = document.getElementById('delete-display-image-name')
     if (displayImageName !== null) {
       displayImageName.innerText = parentFileName
     }

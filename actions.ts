@@ -5,7 +5,6 @@ import { AuthError } from 'next-auth'
 import type { FileObj, ImageDataToDB } from './types/types'
 import { db } from '@vercel/postgres'
 import type { QueryResult } from '@vercel/postgres'
-import { list } from '@vercel/blob'
 
 export async function authenticate (prevState: string | undefined, formData: FormData): Promise<string | undefined> {
   try {
@@ -53,23 +52,16 @@ export async function addImageInfoToDB (imageData: ImageDataToDB): Promise<Query
 
 export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
   try {
-    const { blobs } = await list()
-    const blobsData = Array.from(blobs)
-    const queryAbleImageNames = blobsData.map(imageData => `'${imageData.pathname}'`).join(', ')
-    if (queryAbleImageNames.length === 0) {
-      return []
-    }
     const client = await db.connect()
     const query = `
     SELECT * FROM Images
-    WHERE ImageName IN (${queryAbleImageNames})
     `
     const queryResult = await client.query(query)
 
     if (queryResult.rowCount === 0) {
       console.error('Error while pulling image information from the database')
     } else {
-      console.log(`Successful image pull from the database: ${queryAbleImageNames}`)
+      console.log('Successful image pull from the database.')
     }
     return queryResult.rows
   } catch (error) {
@@ -78,16 +70,9 @@ export async function pullImageInfoFromDb (): Promise<FileObj[] | never[]> {
 }
 
 export async function pullSingleImageInfoFromDb (imageName: string): Promise<FileObj | number> {
-  const { blobs } = await list()
-  const listOfImages = blobs.map(image => image.pathname)
   try {
-    const queryImageName = listOfImages.filter((dbImageName) => dbImageName.toLowerCase() === imageName.toLocaleLowerCase())[0]
-    if (queryImageName === undefined) {
-      console.log(`The image '${imageName}' does not exist in the saved gallery.`)
-      return 0
-    }
     const client = await db.connect()
-    const query = `SELECT * FROM Images WHERE ImageName='${queryImageName}'`
+    const query = `SELECT * FROM Images WHERE LOWER(ImageName)='${imageName.toLocaleLowerCase()}'`
     const queryResult = await client.query(query)
     if (queryResult.rowCount === 0) {
       console.error('Error while pulling single image information from the database')

@@ -18,3 +18,13 @@ export interface FileObj {
   descriptionfooter: string
   date: string
 }
+
+export interface vgyResponse {
+  delete: string
+  error: boolean
+  ext: string
+  filename: string
+  image: string
+  size: number
+  url: string
+}

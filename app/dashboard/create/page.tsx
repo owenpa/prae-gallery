@@ -15,6 +15,7 @@ import {
   PopoverTrigger
 } from '../../ui/popover'
 import { useRouter } from 'next/navigation'
+import { type vgyResponse } from '@/types/types'
 
 export default function ImageUpload (): JSX.Element {
   const [fileName, setFileName] = useState<string>('')
@@ -27,24 +28,35 @@ export default function ImageUpload (): JSX.Element {
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (inputFileRef.current === null || inputFileRef.current.files === null) return
 
+    const file = inputFileRef.current.files[0]
+    const imageFormData = new FormData()
+    imageFormData.append('file', file)
+    if (process.env.REACT_APP_VGY_KEY === undefined) { return } // TODO
+    imageFormData.append('userkey', process.env.REACT_APP_VGY_KEY)
+    const vgyUploadResponse = await fetch('https://vgy.me/upload', { method: 'POST', body: imageFormData })
+
+    const vgyUploadResponseAsObj: vgyResponse = await vgyUploadResponse.json()
+    if (vgyUploadResponseAsObj.error) {
+      router.refresh()
+      return
+    }
+
     const htmlFormAsObj = {
       fileName,
       title: (document.getElementById('title') as HTMLInputElement).value,
       price: (document.getElementById('price') as HTMLInputElement).value,
       description: (document.getElementById('description') as HTMLInputElement).value,
       footer: (document.getElementById('footer') as HTMLInputElement).value,
-      date: format(date, 'MM/dd/yyyy')
+      date: format(date, 'MM/dd/yyyy'),
+      imageurl: vgyUploadResponseAsObj.image
     }
 
     if (htmlFormAsObj.price !== null) htmlFormAsObj.price = parseFloat(htmlFormAsObj.price).toFixed(2)
     const URLParams = new URLSearchParams(htmlFormAsObj)
-    const file = inputFileRef.current.files[0]
-    const response = await fetch(`/api/upload?${URLParams.toString()}`, {
-      method: 'POST',
-      body: file
-    })
 
-    if (response.status === 200) {
+    const dbUploadResponse = await fetch(`/api/upload?${URLParams.toString()}`, { method: 'POST' })
+
+    if (dbUploadResponse.status === 200) {
       router.push('/dashboard', { scroll: true })
     }
   }

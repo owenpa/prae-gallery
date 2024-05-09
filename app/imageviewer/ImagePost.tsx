@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import ActionBar from '../ui/ActionBar'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import ToggleTheme from '../ui/ToggleTheme'
 import Link from 'next/link'
 import {
@@ -13,17 +13,26 @@ import {
   navigationMenuTriggerStyle
 } from '../ui/navigation-menu'
 
-export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesrc, imagename, imagedesc, imageprice, imagetitle, imagefooter, imagedate }: { oneGalleryImage: boolean, setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string, imageprice: string, imagetitle: string, imagefooter: string, imagedate: string }): JSX.Element {
+export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesrc, imagename, imagedesc, imageprice, imagetitle, imagefooter, imagedate, elementIdx, changedIdx }: { oneGalleryImage: boolean, setIndexProp: (prevIdx: number, newIdx: number, direction: string) => void, idx: number, imagesrc: string, imagename: string, imagedesc: string, imageprice: string, imagetitle: string, imagefooter: string, imagedate: string, elementIdx: number, changedIdx: number }): JSX.Element {
   const [previouslyLiked, setPreviouslyLiked] = useState(false)
+  const imageRef = useRef(null)
   useEffect(() => {
     setPreviouslyLiked(localStorage.getItem(imagename) !== null)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    if (imageRef.current !== undefined) {
+      if (changedIdx === idx) {
+        (imageRef.current as unknown as HTMLImageElement).classList.toggle('fadeoutdown', false);
+        (imageRef.current as unknown as HTMLImageElement).classList.toggle('fadeoutup', false)
+      }
+    }
+  }, [elementIdx, changedIdx])
 
   return (
     <div className='grid grid-cols-[50vw_40vw] gap-[5vw] absolute center w-full justify-center h-screen gap'>
       <div className='relative flex justify-center content-center'>
-        <Image className='image-stuff' fill={true} sizes='1024px' objectFit='contain' src={imagesrc} alt={`image in gallery #${idx}`} />
+        <Image ref={imageRef} className='image-stuff' fill={true} sizes='1024px' objectFit='contain' src={imagesrc} alt={`image in gallery #${idx}`} />
       </div>
       <div className='h-full w-full flex flex-col'>
         <div className='h-1/5 flex flex-col self-end'>

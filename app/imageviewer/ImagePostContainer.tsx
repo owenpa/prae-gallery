@@ -22,14 +22,6 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
     }
   }
 
-  function handleAnimationEnd (divElement: HTMLDivElement): void {
-    if (divElement.classList.contains('fadeoutup') || divElement.classList.contains('fadeoutdown')) {
-      divElement.className = 'flex fadeout image-stuff'
-    } else if (divElement.classList.contains('fadeinup') || divElement.classList.contains('fadeindown')) {
-      divElement.className = 'flex image-stuff'
-    }
-  }
-
   function toggleButtonUse (postElement: Element): void {
     postElement.addEventListener('animationstart', () => {
       Array.from(postElement.getElementsByClassName('nav-button')).forEach(element => {
@@ -91,7 +83,7 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
     const oneGalleryImage = imageInfoArray.length === 1
     imageList = imageInfoArray.map((fileObj, idx) => {
       return (
-        <div key={idx} className={`flex ${idx === 0 ? 'fadein' : 'hidden'} image-stuff`} onAnimationEnd={(animationEvent) => { handleAnimationEnd((animationEvent.target as HTMLDivElement)) }}>
+        <div key={idx} className={`flex ${idx === 0 ? 'fadein' : 'hidden'} image-stuff`}>
           <ImagePost
             oneGalleryImage={oneGalleryImage}
             setIndexProp={setIndexProp}
@@ -102,7 +94,9 @@ export default function ImagePostContainer ({ imageInfoArray }: { imageInfoArray
             imagedesc={fileObj.description}
             imagefooter={fileObj.descriptionfooter}
             imagedate={fileObj.date}
-            imageprice={fileObj.price}/>
+            imageprice={fileObj.price}
+            elementIdx={elementIdx}
+            changedIdx={changedIdx}/>
         </div>
       )
     })

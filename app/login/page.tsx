@@ -22,7 +22,7 @@ export default function Login (): JSX.Element {
 
   function ShowPassword (): JSX.Element {
     return (
-      <button onClick={() => { setViewPassword(!viewPassword) }} className='text-left'>
+      <button onClick={() => { setViewPassword(!viewPassword) }} className='text-left' type='button'>
         <Eye className='inline' />
         <p className='inline'> Showing password</p>
       </button>
@@ -31,7 +31,7 @@ export default function Login (): JSX.Element {
 
   function HidePassword (): JSX.Element {
     return (
-      <button onClick={() => { setViewPassword(!viewPassword) }} className='text-left'>
+      <button onClick={() => { setViewPassword(!viewPassword) }} className='text-left' type='button'>
         <EyeOff className='inline' />
         <p className='inline'> Hiding password</p>
       </button>

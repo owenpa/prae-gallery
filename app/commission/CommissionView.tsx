@@ -2,14 +2,14 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
-import { X } from 'lucide-react'
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
 import Link from 'next/link'
 import ToggleTheme from '../ui/ToggleTheme'
 import NoImages from '../ui/NoImages'
-import { type FileObj } from '@/types/types'
+import { type CommissionPageObj, type FileObj } from '@/types/types'
+import CommissionText from './CommissionText'
 
-export default function CommissionView ({ imageDataList }: { imageDataList: FileObj[] }): JSX.Element {
+export default function CommissionView ({ imageDataList, commissionInformation }: { commissionInformation: CommissionPageObj, imageDataList: FileObj[] }): JSX.Element {
   const imageList = imageDataList.map((imageData, idx) => {
     return (
       <div key={idx} className={`commission-transition w-full h-full absolute flex justify-center ${idx === 0 ? '' : 'commission-fadeout'}`}>
@@ -72,16 +72,7 @@ export default function CommissionView ({ imageDataList }: { imageDataList: File
             </NavigationMenu>
           </div>
           <div className='h-3/5 w-full flex flex-col justify-center'>
-            <h1 className='text-3xl'>Commission status: <X className='inline' color='#ff7a7a' /></h1>
-            Prices may vary:
-            <ul>
-              <li>$$ : ???</li>
-              <li>$$ : ???</li>
-              <li>$$ : ???</li>
-              <li>$$ : ???</li>
-            </ul>
-            <p>Contact me here: </p>
-            <a href='mailto:someone@example.com'>someone@example.com</a>
+            <CommissionText commissionInformation={commissionInformation} />
           </div>
           <div className='h-1/5'></div>
         </div>

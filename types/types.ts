@@ -28,3 +28,12 @@ export interface vgyResponse {
   size: number
   url: string
 }
+
+export interface CommissionPageObj {
+  commissionstatus: string
+  configversion: number
+  contactinfo: string
+  pricelist: string
+  textafterprice: string
+  textbeforeprice: string
+}

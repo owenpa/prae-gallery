@@ -1,33 +1,210 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+ 
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 47.9 95.8% 53.1%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
+    --radius: 0.3rem;
+  }
+ 
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 47.9 95.8% 53.1%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 35.5 91.7% 32.9%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.image-stuff {
+  transition: 1s;
+  max-height: 80vh;
+  margin: auto;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.limited-description {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.commission-transition {
+  transition: 2s;
+}
+.commission-fadeout {
+  opacity: 0;
+}
+.fadeout {
+  opacity: 0;
+  animation: fadeoutanim 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeoutanim {
+  0% {
+    visibility: visible;
+    opacity: 1}
+  99% {opacity: 0}
+  100% 
+  {visibility: hidden;}
+}
+
+.fadein {
+  opacity: 0;
+  animation: fadeinanim 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeinanim {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeinup {
+  opacity: 1;
+  animation: movementDownToUp 1s;
+}
+.fadeindown {
+  opacity: 1;
+  animation: movementUpToDown 1s;
+}
+
+.fadeoutup {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  animation: doNothing 1s;
+}
+
+.fadeoutdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  animation: doNothing 1s;
+}
+
+.cs-checkbox {
+  margin-left: 10px;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.cs-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.cs-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border: solid 2px rgb(250, 204, 21);
+  border-radius: 2px;
+}
+
+.cs-checkbox input:checked ~ .cs-checkmark {
+  background-color: rgb(250, 204, 21);
+}
+
+.cs-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.cs-checkbox input:checked ~ .cs-checkmark:after {
+  display: block;
+}
+
+.cs-checkbox .cs-checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid rgb(0, 0, 0);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+@keyframes movementDownToUp {
+  0% {transform: inherit}
+  1% {transform: translateY(40px)}
+  100% {transform: translateY(0px)}
+}
+
+@keyframes movementUpToDown {
+  0% {transform: inherit}
+  1% {transform: translateY(-40px)}
+  100% {transform: translateY(0px)}
+}
+
+@keyframes opacityFadeIn {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
+
+@keyframes doNothing { } /* image carousel continuity (works off of animation end event)*/
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

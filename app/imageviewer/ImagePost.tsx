@@ -27,6 +27,7 @@ export default function ImagePost ({ oneGalleryImage, setIndexProp, idx, imagesr
         (imageRef.current as unknown as HTMLImageElement).classList.toggle('fadeoutup', false)
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elementIdx, changedIdx])
 
   return (

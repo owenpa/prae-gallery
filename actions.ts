@@ -2,7 +2,7 @@
 
 import { signIn } from '@/auth'
 import { AuthError } from 'next-auth'
-import type { FileObj, ImageDataToDB } from './types/types'
+import type { CommissionPageObj, FileObj, ImageDataToDB } from './types/types'
 import { db } from '@vercel/postgres'
 import type { QueryResult } from '@vercel/postgres'
 
@@ -228,6 +228,7 @@ export async function editCommissionPage (commissionPageInfo: FormData): Promise
     if (!(pair[0].startsWith('type-image-')) && !(pair[0].startsWith('set-price-'))) { continue }
     if (pair[0].match(/\d/g)?.[0] === null) { continue }
     if (temp.length === 1) {
+      if ((pair[1] as string)[0] !== '$') pair[1] = `$${pair[1] as string}`
       temp.push(pair[1] as string)
       pricesAndTypes.push(`${temp[0]} : ${temp[1]}`)
       temp = []
@@ -251,5 +252,19 @@ export async function editCommissionPage (commissionPageInfo: FormData): Promise
   } catch (error) {
     console.error(error)
     throw new Error('Error while attempting to update the commission page.')
+  }
+}
+
+export async function fetchCommissionInformation (): Promise<CommissionPageObj> {
+  try {
+    const client = await db.connect()
+    const query = `
+    SELECT * FROM CommissionsPage ORDER BY ConfigVersion DESC LIMIT 1
+    `
+    const queryResult = await client.query(query)
+    return queryResult.rows[0]
+  } catch (error) {
+    console.error(error)
+    throw new Error('Error while attempting to fetch commission page information.')
   }
 }

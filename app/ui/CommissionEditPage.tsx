@@ -11,8 +11,8 @@ export default function CommissionEditPage (): JSX.Element {
   const [textBeforePrices, setTextBeforePrices] = useState('')
   const [textAfterPrices, setTextAfterPrices] = useState('')
   const [contactInfo, setContactInfo] = useState('')
-  const [commissionStatus, setCommissionStatus] = useState('')
-  const [prices, setPrices] = useState([<></>])
+  const [commissionStatus, setCommissionStatus] = useState('false')
+  const [prices, setPrices] = useState([])
   const [pricesCount, setPricesCount] = useState(0)
   const [priceReqDelete, setPriceReqDelete] = useState(0)
 
@@ -25,8 +25,11 @@ export default function CommissionEditPage (): JSX.Element {
     document.getElementById(`price${priceReqDelete}`)?.remove()
   }, [priceReqDelete])
 
-  function handleSubmit (event: FormData): void {
-    // TODO
+  async function handleSubmit (event: FormData): Promise<void> {
+    const newCommissionForm = event
+    newCommissionForm.append('commission-status', commissionStatus)
+    const editCommissionResponse = await fetch('/api/editcommission', { method: 'POST', body: newCommissionForm })
+    console.log(editCommissionResponse)
   }
 
   function handlePreviewPrices (): void {
@@ -39,20 +42,20 @@ export default function CommissionEditPage (): JSX.Element {
       if (pair[0].match(/\d/g)?.[0] === null) { continue }
       if (temp.length === 1) {
         temp.push(pair[1] as string)
-        priceArray.push(<p>{temp[0]} : ${temp[1]}</p>)
+        priceArray.push(<p id={`${temp[1]}`} key={temp[1] + 10}>{temp[0]} : ${temp[1]}</p>)
         temp = []
       } else {
         temp.push(pair[1] as string)
       }
     }
-    setPrices(priceArray)
+    setPrices(priceArray as never[])
   }
 
   return (
     <div className='flex flex-col gap-10 max-w-xl w-full'>
       <div className='flex flex-col gap-2 justify-self-center'>
         <div className='border px-4 py-6 rounded-lg tracking-wide gap-2'>
-          <form id='edit-commission-form' action={(event) => { handleSubmit(event) }} className='gap-2 flex flex-col'>
+          <form id='edit-commission-form' action={(event) => { void handleSubmit(event) }} className='gap-2 flex flex-col'>
             <div className='items-center'>
               <label htmlFor='commission-status' className="text-xl font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline">Open for commissions? </label>
               <label className='cs-checkbox'>

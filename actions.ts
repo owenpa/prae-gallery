@@ -214,3 +214,42 @@ export async function addShareViewToImage (imageName: string): Promise<void> {
     throw new Error(`Error while attempting to like an image with name "${imageName}"`)
   }
 }
+
+export async function editCommissionPage (commissionPageInfo: FormData): Promise<void> {
+  const commissionStatus = commissionPageInfo.get('commission-status') === 'on' ? 'true' : 'false'
+  const textBeforePrice = commissionPageInfo.get('text-before-price')
+  const textAfterPrice = commissionPageInfo.get('text-after-price')
+  const contactInfo = commissionPageInfo.get('contact-info')
+  const pricesAndTypes = []
+  let temp: string[] = []
+  const entriesToDelete: string[] = []
+
+  for (const pair of commissionPageInfo.entries()) {
+    if (!(pair[0].startsWith('type-image-')) && !(pair[0].startsWith('set-price-'))) { continue }
+    if (pair[0].match(/\d/g)?.[0] === null) { continue }
+    if (temp.length === 1) {
+      temp.push(pair[1] as string)
+      pricesAndTypes.push(`${temp[0]} : ${temp[1]}`)
+      temp = []
+    } else {
+      temp.push(pair[1] as string)
+    }
+    entriesToDelete.push(pair[0])
+  }
+  entriesToDelete.forEach(formDataKey => { commissionPageInfo.delete(formDataKey) })
+  const jsonFriendlyPrices = JSON.stringify(pricesAndTypes)
+
+  try {
+    const client = await db.connect()
+    const query = `
+      INSERT INTO CommissionsPage (CommissionStatus, TextBeforePrice, PriceList, TextAfterPrice, ContactInfo)
+      VALUES ($1, $2, $3, $4, $5)
+    `
+
+    await client.query(query, [commissionStatus, textBeforePrice, jsonFriendlyPrices, textAfterPrice, contactInfo])
+    console.log('Successfully edited the commissions page.')
+  } catch (error) {
+    console.error(error)
+    throw new Error('Error while attempting to update the commission page.')
+  }
+}

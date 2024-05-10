@@ -10,7 +10,7 @@ Promise<NextResponse<{ error: string }> | NextResponse<{ Message: string, status
     await editCommissionPage(editedCommissions)
     return NextResponse.json({ Message: 'Success', status: 201 })
   } catch (error) {
-    console.error('Error occurred during image saving: ', error)
+    console.error('Error occurred while editing commissions page: ', error)
     return NextResponse.json({ Message: 'Failed', status: 500 })
   }
 }

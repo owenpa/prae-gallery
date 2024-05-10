@@ -44,10 +44,30 @@ async function seedGallery(client) {
   }
 }
 
+async function seedCommissions(client) {
+  try {
+    const createCommissionsTable = await client.sql`
+    CREATE TABLE IF NOT EXISTS CommissionsPage (
+      ConfigVersion SERIAL PRIMARY KEY,
+      CommissionStatus TEXT DEFAULT 'false',
+      TextBeforePrice TEXT DEFAULT '-',
+      PriceList TEXT,
+      TextAfterPrice TEXT DEFAULT '-',
+      ContactInfo TEXT DEFAULT '-'
+    );`
+    console.log('------- Created CommissionsPage table')
+    return createCommissionsTable
+
+  } catch (error) {
+    throw new Error('Error seeding commissions page: ')
+  }
+}
+
 async function main() {
   const client = await db.connect();
   await seedUsers(client);
   await seedGallery(client);
+  await seedCommissions(client)
   await client.end();
 }
 
